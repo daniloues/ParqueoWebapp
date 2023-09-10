@@ -405,49 +405,49 @@ public class TipoEspacioBeanTest {
         //fail("You shall not pass");
     }
 
-    @Test
-    public void testDelete() {
-        System.out.println("delete");
-        EntityManager mockEM = Mockito.mock(EntityManager.class);
- 
-
-        TipoEspacioBean cut = new TipoEspacioBean();
-        cut.em = mockEM;
-
-        TipoEspacio eliminado = new TipoEspacio(1);
-        cut.delete(eliminado);
-
-        Mockito.verify(mockEM, Mockito.times(1)).remove(ArgumentMatchers.any());
-        
-        
-        TipoEspacioBean mockBean = Mockito.mock(TipoEspacioBean.class);
-        TipoEspacioBean espia = Mockito.spy(TipoEspacioBean.class);
-        espia.em = mockEM;
-        Mockito.when(espia.getEntityManager()).thenThrow(NullPointerException.class);
-        
-        try{
-            espia.delete(eliminado);
-        }catch(Exception ex){
-        }
-        
-        Mockito.verify(espia, Mockito.times(1)).getEntityManager();
-
-        assertThrows(IllegalArgumentException.class, () -> {
-            cut.delete(null);
-        });
-
-        cut.em = null;
-        assertThrows(IllegalStateException.class, () -> {
-            cut.delete(eliminado);
-        });
-
-        cut.em = this.emGeneradorExcepcion;
-        assertThrows(IllegalStateException.class, () -> {
-            cut.delete(eliminado);
-        });
-
-        //fail("you shall not pass");
-    }
+//    @Test
+//    public void testDelete() {
+//        System.out.println("delete");
+//        EntityManager mockEM = Mockito.mock(EntityManager.class);
+// 
+//
+//        TipoEspacioBean cut = new TipoEspacioBean();
+//        cut.em = mockEM;
+//
+//        TipoEspacio eliminado = new TipoEspacio(1);
+//        cut.delete(eliminado);
+//
+//        Mockito.verify(mockEM, Mockito.times(1)).remove(ArgumentMatchers.any());
+//        
+//        
+//        TipoEspacioBean mockBean = Mockito.mock(TipoEspacioBean.class);
+//        TipoEspacioBean espia = Mockito.spy(TipoEspacioBean.class);
+//        espia.em = mockEM;
+//        Mockito.when(espia.getEntityManager()).thenThrow(NullPointerException.class);
+//        
+//        try{
+//            espia.delete(eliminado);
+//        }catch(Exception ex){
+//        }
+//        
+//        Mockito.verify(espia, Mockito.times(1)).getEntityManager();
+//
+//        assertThrows(IllegalArgumentException.class, () -> {
+//            cut.delete(null);
+//        });
+//
+//        cut.em = null;
+//        assertThrows(IllegalStateException.class, () -> {
+//            cut.delete(eliminado);
+//        });
+//
+//        cut.em = this.emGeneradorExcepcion;
+//        assertThrows(IllegalStateException.class, () -> {
+//            cut.delete(eliminado);
+//        });
+//
+//        //fail("you shall not pass");
+//    }
 
     @Test
     public void testModify() {

@@ -108,28 +108,49 @@ public abstract class AbstractDataAccess<T> implements Serializable {
 
     public void delete(T registro) throws IllegalStateException, IllegalArgumentException {
 
-        EntityManager em = null;
-        try {
-            em = getEntityManager();
-        } catch (Exception ex) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, ex.getMessage(), ex);
-        }
+//        EntityManager em = null;
+//        try {
+//            em = getEntityManager();
+//        } catch (Exception ex) {
+//            Logger.getLogger(getClass().getName()).log(Level.SEVERE, ex.getMessage(), ex);
+//        }
+//
+//        if (registro != null) {
+//            if (em != null) {
+//                try {
+//                    em.find(tipoDato, em);
+//                    em.remove(em);
+//                    return;
+//
+//                } catch (Exception ex) {
+//                    Logger.getLogger(getClass().getName()).log(Level.SEVERE, ex.getMessage(), ex);
+//                }
+//
+//            }
+//            throw new IllegalStateException();
+//        }
+//        throw new IllegalArgumentException();
 
-        if (registro != null) {
-            if (em != null) {
-                try {
-                    em.find(tipoDato, em);
-                    em.remove(em);
-                    return;
-
-                } catch (Exception ex) {
-                    Logger.getLogger(getClass().getName()).log(Level.SEVERE, ex.getMessage(), ex);
-                }
-
+        if (registro !=null) {
+            EntityManager em =null;
+            try {
+                em = getEntityManager();
+            } catch (Exception ex) {
+                Logger.getLogger(getClass().getName()).log(Level.SEVERE, ex.getMessage(), ex);
             }
-            throw new IllegalStateException();
+            if (em!=null) {
+                if (!em.contains(registro)) {
+                    registro = em.merge(registro);
+                }
+                em.remove(registro);
+                return;
+            } else {
+                throw new  IllegalStateException();
+            }
         }
         throw new IllegalArgumentException();
+
+
 
     }
 

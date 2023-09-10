@@ -110,7 +110,6 @@ public class FrmTipoReserva implements Serializable {
         if (modify != null) {
             //TODO:notificar que se modifico
             this.estado = EstadosCRUD.NINGUNO;
-
             this.regis = null;
             return;
 
