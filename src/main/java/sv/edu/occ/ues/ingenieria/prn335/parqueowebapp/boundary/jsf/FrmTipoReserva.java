@@ -5,6 +5,8 @@
 package sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.boundary.jsf;
 
 import jakarta.annotation.PostConstruct;
+import jakarta.faces.application.FacesMessage;
+import jakarta.faces.context.FacesContext;
 import jakarta.faces.event.ActionEvent;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
@@ -37,6 +39,9 @@ public class FrmTipoReserva implements Serializable {
     EstadosCRUD estado = EstadosCRUD.NINGUNO;
 
     TipoReserva regis = null;
+    
+    @Inject
+    FacesContext fc;
 
     public FrmTipoReserva() {
 
@@ -121,6 +126,7 @@ public class FrmTipoReserva implements Serializable {
         try {
             this.trBean.delete(regis);
             this.estado = EstadosCRUD.NINGUNO;
+            this.regis=null;
             return;
             //TODO: enviar mensaje de exito
         } catch (Exception ex) {
@@ -131,12 +137,21 @@ public class FrmTipoReserva implements Serializable {
     }
 
     public void btnGuardarHandler(ActionEvent ae) {
+        FacesMessage mensaje=null;
+        
         try {
             this.trBean.create(regis);
             this.estado = EstadosCRUD.NINGUNO;
+          mensaje=new FacesMessage(FacesMessage.SEVERITY_INFO, "Registro guardado con exito", "Se creo el registro");
+          fc.addMessage(null, mensaje);
+          return;
+          
+          
         } catch (Exception ex) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, ex.getMessage(), ex);
         }
+        mensaje=new FacesMessage(FacesMessage.SEVERITY_ERROR, "No se pudo guardar el registro", "no se creo el registro");
+          fc.addMessage(null, mensaje);
 
         this.regis = null;
 

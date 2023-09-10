@@ -330,19 +330,19 @@ public class TipoEspacioBeanTest {
         cut.em = em;
         int resultado = cut.count();
         assertEquals(resultado, Long.valueOf(1));
-        
+
         TipoEspacioBean mockBean = Mockito.mock(TipoEspacioBean.class);
         TipoEspacioBean espia = Mockito.spy(TipoEspacioBean.class);
         espia.em = em;
         Mockito.when(espia.getEntityManager()).thenThrow(NullPointerException.class);
-        
-        try{
+
+        try {
             espia.count();
-        }catch(Exception ex){
+        } catch (Exception ex) {
         }
-        
+
         Mockito.verify(espia, Mockito.times(1)).getEntityManager();
-        
+
         try {
             cut.em = null;
             cut.count();
@@ -350,9 +350,6 @@ public class TipoEspacioBeanTest {
         } catch (Exception ex) {
 
         }
-        
-        
-        
 
         //fail("You shall not pass");
     }
@@ -367,31 +364,28 @@ public class TipoEspacioBeanTest {
         cut.em = mockEM;
 
         Object id = 1;
-        
-        
+
         TipoEspacio objetoPrueba = new TipoEspacio();
         when(mockEM.find(eq(TipoEspacio.class), eq(id))).thenReturn(objetoPrueba);
 
         TipoEspacio resultado = cut.findById(id);
-        
+
         TipoEspacioBean mockBean = Mockito.mock(TipoEspacioBean.class);
         TipoEspacioBean espia = Mockito.spy(TipoEspacioBean.class);
         espia.em = mockEM;
         Mockito.when(espia.getEntityManager()).thenThrow(NullPointerException.class);
-        
-        try{
+
+        try {
             espia.findById(resultado);
-        }catch(Exception ex){
+        } catch (Exception ex) {
         }
-        
+
         Mockito.verify(espia, Mockito.times(1)).getEntityManager();
 
         assertNotNull(resultado);
         assertEquals(objetoPrueba, resultado);
 
         verify(mockEM).find(eq(TipoEspacio.class), eq(id));
-        
-        
 
         assertThrows(IllegalArgumentException.class, () -> {
             cut.findById(null);
@@ -409,7 +403,6 @@ public class TipoEspacioBeanTest {
     public void testDelete() {
         System.out.println("delete");
         EntityManager mockEM = Mockito.mock(EntityManager.class);
- 
 
         TipoEspacioBean cut = new TipoEspacioBean();
         cut.em = mockEM;
@@ -430,37 +423,18 @@ public class TipoEspacioBeanTest {
         } catch (IllegalStateException ex) {
 
         }
-//        TipoEspacio eliminado = new TipoEspacio(1);
-//        cut.delete(eliminado);
-//
-//        Mockito.verify(mockEM, Mockito.times(1)).remove(ArgumentMatchers.any());
-//        
-//        
+
         TipoEspacioBean mockBean = Mockito.mock(TipoEspacioBean.class);
         TipoEspacioBean espia = Mockito.spy(TipoEspacioBean.class);
         espia.em = mockEM;
         Mockito.when(espia.getEntityManager()).thenThrow(NullPointerException.class);
-        
-        try{
+
+        try {
             espia.delete(eliminado);
-        }catch(Exception ex){
+        } catch (Exception ex) {
         }
-        
+
         Mockito.verify(espia, Mockito.times(1)).getEntityManager();
-//
-//        assertThrows(IllegalArgumentException.class, () -> {
-//            cut.delete(null);
-//        });
-//
-//        cut.em = null;
-//        assertThrows(IllegalStateException.class, () -> {
-//            cut.delete(eliminado);
-//        });
-//
-//        cut.em = this.emGeneradorExcepcion;
-//        assertThrows(IllegalStateException.class, () -> {
-//            cut.delete(eliminado);
-//        });
 
         //fail("you shall not pass");
     }
@@ -476,13 +450,13 @@ public class TipoEspacioBeanTest {
 
         EntityManager mockEM = Mockito.mock(EntityManager.class);
         Mockito.when(mockEM.merge(modificado)).thenReturn(modificado);
-        
+
         TipoEspacioBean mockBean = Mockito.mock(TipoEspacioBean.class);
         TipoEspacioBean espia = Mockito.spy(TipoEspacioBean.class);
 
         cut.em = mockEM;
-        Mockito.when(espia.getEntityManager()).thenThrow(NullPointerException.class);        
-        
+        Mockito.when(espia.getEntityManager()).thenThrow(NullPointerException.class);
+
         espia.em = mockEM;
 
         try {
@@ -491,7 +465,7 @@ public class TipoEspacioBeanTest {
         }
 
         Mockito.verify(espia, Mockito.times(1)).getEntityManager();
-        
+
         TipoEspacio resultado = cut.modify(null);
         assertNull(resultado);
 

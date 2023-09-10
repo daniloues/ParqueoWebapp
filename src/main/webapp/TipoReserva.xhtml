@@ -56,18 +56,18 @@
             <h:form rendered="#{not empty frmTipoReserva.regis}">
 
                 <h:panelGrid columns="2">
-                    <h:outputLabel value="ID" for="txtId"/>
-                    <h:inputText id="txtId" value="#{frmTipoReserva.regis.idTipoReserva}"
+                    <p:outputLabel value="ID" for="txtId"/>
+                    <p:inputText id="txtId" value="#{frmTipoReserva.regis.idTipoReserva}"
                                  readonly="true" disabled="true"/>
 
-                    <h:outputLabel value="Nombre" for="txtNombre"/>
-                    <h:inputText id="txtNombre" value="#{frmTipoReserva.regis.nombre}" size="70"/>
+                    <p:outputLabel value="Nombre" for="txtNombre"/>
+                    <p:inputText id="txtNombre" value="#{frmTipoReserva.regis.nombre}" size="70"/>
 
-                    <h:outputLabel value="Publico" for="chkPublico"/>
-                    <h:selectBooleanCheckbox value="#{frmTipoReserva.regis.publico}"/>
+                    <p:outputLabel value="Publico" for="chkPublico"/>
+                    <p:selectBooleanCheckbox id="chkPublico" value="#{frmTipoReserva.regis.publico}"/>
 
-                    <h:outputLabel value="Descripcion" for="txtDescripcion"/>
-                    <h:inputTextarea id="txtDescripcion" value="#{frmTipoReserva.regis.descripcion}" cols="70" rows="3"/>
+                    <p:outputLabel value="Descripcion" for="txtDescripcion"/>
+                    <p:inputTextarea id="txtDescripcion" value="#{frmTipoReserva.regis.descripcion}" cols="70" rows="3"/>
 
 
                 </h:panelGrid>
@@ -84,7 +84,7 @@
                                  rendered="#{frmTipoReserva.estado=='MODIFICAR'}"
                                  update=":pnlDetalle :frmTabla"
                                  actionListener="#{frmTipoReserva.btnEliminarHandler}"/>
-                <h:messages/>
+                <p:messages/>
             </h:form>
 
         </h:panelGroup>
