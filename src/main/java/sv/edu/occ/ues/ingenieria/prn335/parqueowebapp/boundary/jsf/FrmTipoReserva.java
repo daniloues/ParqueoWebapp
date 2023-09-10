@@ -12,6 +12,8 @@ import jakarta.inject.Named;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import org.primefaces.model.FilterMeta;
 import org.primefaces.model.LazyDataModel;
@@ -32,7 +34,7 @@ public class FrmTipoReserva implements Serializable {
 
     LazyDataModel<TipoReserva> modelo;
 
-    List<TipoReserva> listaRegistros;
+    EstadosCRUD estado = EstadosCRUD.NINGUNO;
 
     TipoReserva regis = null;
 
@@ -48,7 +50,6 @@ public class FrmTipoReserva implements Serializable {
 
     public void inicializarRegistros() {
 
-        this.listaRegistros = trBean.FindRange(0, 100000);
         this.modelo = new LazyDataModel<TipoReserva>() {
             @Override
             public int count(Map<String, FilterMeta> map) {
@@ -82,46 +83,64 @@ public class FrmTipoReserva implements Serializable {
 
     }
 
-    public void btnSeleccionarHandler(ActionEvent ae) {
-        Integer id = (Integer) ae.getComponent().getAttributes().get("seleccionado");
-        if (id != null) {
-            this.regis = trBean.findById(id);
-        }
+    public void seleccionarRegistro() {
+        this.estado = EstadosCRUD.MODIFICAR;
+
     }
 
     public void btnNuevoHandler(ActionEvent ae) {
         this.regis = new TipoReserva();
+        this.estado = EstadosCRUD.NUEVO;
 
     }
 
     public void btnCancelarHandler(ActionEvent ae) {
         this.regis = null;
+        this.estado = EstadosCRUD.NINGUNO;
     }
 
     public void btnModificarHandler(ActionEvent ae) {
-        TipoReserva modify = this.trBean.modify(regis);
+        TipoReserva modify = null;
+        try {
+            modify = this.trBean.modify(regis);
+        } catch (Exception ex) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, ex.getMessage(), ex);
+        }
+
         if (modify != null) {
             //TODO:notificar que se modifico
-            this.listaRegistros = trBean.FindRange(0, 100000);
+            this.estado = EstadosCRUD.NINGUNO;
+
             this.regis = null;
+            return;
 
         }
         //TODO:notificar que no se cambio
     }
 
+    public void btnEliminarHandler(ActionEvent ae) {
+        try {
+            this.trBean.delete(regis);
+            this.estado = EstadosCRUD.NINGUNO;
+            return;
+            //TODO: enviar mensaje de exito
+        } catch (Exception ex) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, ex.getMessage(), ex);
+        }
+
+        //TODO:notificar que no se elimino
+    }
+
     public void btnGuardarHandler(ActionEvent ae) {
-        this.trBean.create(regis);
-        this.listaRegistros = trBean.FindRange(0, 100000);
+        try {
+            this.trBean.create(regis);
+            this.estado = EstadosCRUD.NINGUNO;
+        } catch (Exception ex) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, ex.getMessage(), ex);
+        }
+
         this.regis = null;
 
-    }
-
-    public List<TipoReserva> getListaRegistros() {
-        return listaRegistros;
-    }
-
-    public void setListaRegistros(List<TipoReserva> listaRegistro) {
-        this.listaRegistros = listaRegistro;
     }
 
     public TipoReserva getRegis() {
@@ -134,6 +153,10 @@ public class FrmTipoReserva implements Serializable {
 
     public LazyDataModel<TipoReserva> getModelo() {
         return this.modelo;
+    }
+
+    public EstadosCRUD getEstado() {
+        return estado;
     }
 
 }

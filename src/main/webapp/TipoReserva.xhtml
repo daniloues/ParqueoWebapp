@@ -8,7 +8,7 @@
              xmlns:p="http://primefaces.org/ui">
 
     <define name="tabla">
-        <h:form id="frmTabla">
+        <h:form id="frmTabla" >
             <p:dataTable value="#{frmTipoReserva.modelo}" var="r"
                          lazy="true"
                          paginator="true"
@@ -16,10 +16,13 @@
                          first="0"
                          selectionMode="single"
                          selection="#{frmTipoReserva.regis}"
+                         rendered="#{empty frmTipoReserva.regis}"
 
                          >
-                
-                <p:ajax process="@this" update=":pnlDetalle" event="rowSelect"/>
+
+                <p:ajax process="@this" update=":pnlDetalle @form" 
+                        listener="#{frmTipoReserva.seleccionarRegistro}"
+                        event="rowSelect"/>
 
                 <p:column title="ID">
                     <h:outputText value="#{r.idTipoReserva}"/>
@@ -28,7 +31,7 @@
                 <p:column title="NOMBRE">
                     <h:outputText value="#{r.nombre}"/>
                 </p:column>
-                
+
                 <p:column title="ESTADO">
                     <h:outputText value="#{r.publico?'ACTIVO':'INACTIVO'}"/>
                 </p:column>
@@ -37,58 +40,13 @@
                     <h:outputText value="#{r.descripcion}"/>
                 </p:column>
 
-                
-
-
             </p:dataTable>
-            <h:dataTable id="tblPrincipal" value="#{frmTipoReserva.listaRegistros}" var="r">
 
-                <h:column>
-                    <f:facet name="header">
-                        ID
-                    </f:facet>
-                    <h:outputText value="#{r.idTipoReserva}"/>
-                </h:column>
-
-                <h:column>
-                    <f:facet name="header">
-                        NOMBRE
-                    </f:facet>
-                    <h:outputText value="#{r.nombre}"/>
-                </h:column>
-
-                <h:column>
-                    <f:facet name="header">
-                        ESTADO
-                    </f:facet>
-                    <h:outputText value="#{r.publico?'ACTIVO':'INACTIVO'}"/>
-                </h:column>  
-                <h:column>
-                    <f:facet name="header">
-                        DESCRIPCION
-                    </f:facet>
-                    <h:outputText value="#{r.descripcion}"/>
-                </h:column>
-
-                <h:column>
-
-                    <h:commandButton value="Seleccionar" actionListener="#{frmTipoReserva.btnSeleccionarHandler}">
-                        <f:attribute name="seleccionado" value="#{r.idTipoReserva}"/>
-
-                    </h:commandButton>
-                </h:column>
-
-
-
-            </h:dataTable>
-
-            <h:commandButton value="NUEVO" actionListener="#{frmTipoReserva.btnNuevoHandler}">
-                <f:ajax execute="@this" render=":pnlDetalle" />
-
-            </h:commandButton>
-
-
-            <h:commandButton value="CANCELAR" actionListener="#{frmTipoReserva.btnCancelarHandler}" rendered="#{not empty frmTipoReserva.regis}"/>
+            <p:commandButton value="NUEVO" actionListener="#{frmTipoReserva.btnNuevoHandler}" update=":pnlDetalle @form"/>
+  
+            <p:commandButton value="CANCELAR" 
+                             update=":pnlDetalle @form"
+                             actionListener="#{frmTipoReserva.btnCancelarHandler}" rendered="#{not empty frmTipoReserva.regis}"/>
         </h:form>
 
     </define>
@@ -112,10 +70,20 @@
                     <h:inputTextarea id="txtDescripcion" value="#{frmTipoReserva.regis.descripcion}" cols="70" rows="3"/>
 
 
-
                 </h:panelGrid>
-                <h:commandButton value="Guardar" actionListener="#{frmTipoReserva.btnGuardarHandler}"/>
-                <h:commandButton value="modificar" actionListener="#{frmTipoReserva.btnModificarHandler}"/>
+                <p:commandButton value="Guardar" 
+                                 actionListener="#{frmTipoReserva.btnGuardarHandler}"
+                                 update="@form :frmTabla"
+                                 rendered="#{frmTipoReserva.estado=='NUEVO'}"
+                                 />
+                <p:commandButton value="Modificar" 
+                                 rendered="#{frmTipoReserva.estado=='MODIFICAR'}"
+                                 update="@form :frmTabla"
+                                 actionListener="#{frmTipoReserva.btnModificarHandler}"/>
+                <p:commandButton value="Eliminar" 
+                                 rendered="#{frmTipoReserva.estado=='MODIFICAR'}"
+                                 update="@form :frmTabla"
+                                 actionListener="#{frmTipoReserva.btnEliminarHandler}"/>
                 <h:messages/>
             </h:form>
 
