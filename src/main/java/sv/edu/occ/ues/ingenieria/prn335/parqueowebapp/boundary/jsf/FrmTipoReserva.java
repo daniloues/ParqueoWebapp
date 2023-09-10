@@ -58,12 +58,14 @@ public class FrmTipoReserva implements Serializable {
         this.modelo = new LazyDataModel<TipoReserva>() {
             @Override
             public int count(Map<String, FilterMeta> map) {
-                return trBean.count();
+                int resultado = trBean.count();
+                return resultado;
             }
 
             @Override
             public List<TipoReserva> load(int primero, int tamanio, Map<String, SortMeta> map, Map<String, FilterMeta> map1) {
-                return trBean.FindRange(primero, tamanio);
+                List<TipoReserva> resultado = trBean.FindRange(primero, tamanio);
+                return resultado;
             }
 
             @Override
