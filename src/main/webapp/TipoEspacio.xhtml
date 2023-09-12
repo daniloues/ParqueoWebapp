@@ -5,7 +5,8 @@
 
              xmlns:h="http://xmlns.jcp.org/jsf/html"
              xmlns:f="http://xmlns.jcp.org/jsf/core"
-             xmlns:p="http://primefaces.org/ui">
+             xmlns:p="http://primefaces.org/ui"
+             xmlns:btt="http://xmlns.jcp.org/jsf/composite/btnparq">
 
     <define name="tabla">
         <h:form id="frmTabla" >
@@ -32,15 +33,11 @@
                     <h:outputText value="#{r.nombre}"/>
                 </p:column>
 
-               
+
 
             </p:dataTable>
 
-            <p:commandButton value="NUEVO" actionListener="#{frmTipoEspacio.btnNuevoHandler}" update=":pnlDetalle @form"/>
-  
-            <p:commandButton value="CANCELAR" 
-                             update=":pnlDetalle @form"
-                             actionListener="#{frmTipoEspacio.btnCancelarHandler}" rendered="#{not empty frmTipoEspacio.regis}"/>
+            <btt:botonesTop bean="#{frmTipoEspacio}"/>
         </h:form>
 
     </define>
@@ -52,26 +49,29 @@
                 <h:panelGrid columns="2">
                     <p:outputLabel value="ID" for="txtId"/>
                     <p:inputText id="txtId" value="#{frmTipoEspacio.regis.idTipoEspacio}"
-                                />
+                                 />
 
                     <p:outputLabel value="Nombre" for="txtNombre"/>
                     <p:inputText id="txtNombre" value="#{frmTipoEspacio.regis.nombre}" size="70"/>
 
 
                 </h:panelGrid>
-                <p:commandButton value="Guardar" 
-                                 actionListener="#{frmTipoEspacio.btnGuardarHandler}"
-                                 update="@form :frmTabla"
-                                 rendered="#{frmTipoEspacio.estado=='NUEVO'}"
-                                 />
-                <p:commandButton value="Modificar" 
-                                 rendered="#{frmTipoEspacio.estado=='MODIFICAR'}"
-                                 update=":pnlDetalle :frmTabla"
-                                 actionListener="#{frmTipoEspacio.btnModificarHandler}"/>
-                <p:commandButton value="Eliminar" 
-                                 rendered="#{frmTipoEspacio.estado=='MODIFICAR'}"
-                                 update=":pnlDetalle :frmTabla"
-                                 actionListener="#{frmTipoEspacio.btnEliminarHandler}"/>
+
+                <h:panelGrid columns="3">
+                    <p:commandButton value="Guardar" 
+                                     actionListener="#{frmTipoEspacio.btnGuardarHandler}"
+                                     update="@form :frmTabla"
+                                     rendered="#{frmTipoEspacio.estado=='NUEVO'}"
+                                     />
+                    <p:commandButton value="Modificar" 
+                                     rendered="#{frmTipoEspacio.estado=='MODIFICAR'}"
+                                     update=":pnlDetalle :frmTabla"
+                                     actionListener="#{frmTipoEspacio.btnModificarHandler}"/>
+                    <p:commandButton value="Eliminar" 
+                                     rendered="#{frmTipoEspacio.estado=='MODIFICAR'}"
+                                     update=":pnlDetalle :frmTabla"
+                                     actionListener="#{frmTipoEspacio.btnEliminarHandler}"/>
+                </h:panelGrid>
                 <p:messages/>
             </h:form>
 

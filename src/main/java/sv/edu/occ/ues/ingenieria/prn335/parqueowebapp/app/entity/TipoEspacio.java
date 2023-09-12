@@ -94,5 +94,5 @@ public class TipoEspacio implements Serializable {
     public String toString() {
         return "Entity.TipoEspacio[ idTipoEspacio=" + idTipoEspacio + " ]";
     }
-    
+
 }
