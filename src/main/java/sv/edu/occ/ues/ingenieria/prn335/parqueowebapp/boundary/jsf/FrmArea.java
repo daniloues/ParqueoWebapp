@@ -9,6 +9,7 @@ import jakarta.faces.context.FacesContext;
 import jakarta.inject.Inject;
 import java.io.Serializable;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.TreeNode;
 import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.app.entity.Area;
@@ -45,41 +46,63 @@ public class FrmArea extends AbstractFrm<Area> implements Serializable {
             }
         }
     }
-    
-    
-    public void generarArbol(TreeNode padre, Area actual){
-        DefaultTreeNode nuevoPadre =new DefaultTreeNode(actual, padre);
-        
+
+    public void generarArbol(TreeNode padre, Area actual) {
+        DefaultTreeNode nuevoPadre = new DefaultTreeNode(actual, padre);
+
         List<Area> hijos = this.aBean.findByIdPadre(actual.getIdArea(), 0, 1000000000);
         for (Area hijo : hijos) {
             generarArbol(nuevoPadre, hijo);
         }
-    
+
     }
 
     @Override
     public AbstractDataAccess<Area> getDataAccess() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return aBean;
     }
 
     @Override
     public FacesContext getFacesContext() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return fc;
     }
 
     @Override
     public String getIdPorObjeto(Area object) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+
+        if (object != null && object.getIdArea() != null) {
+            return object.getIdArea().toString();
+        }
+        return null;
     }
 
     @Override
     public Area getObjetoPorId(String id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        if (id != null && this.modelo != null && this.modelo.getWrappedData() != null) {
+            return modelo.getWrappedData().stream().filter(r -> r.getIdArea().toString().equals(id)).collect(Collectors.toList()).get(0);
+
+        }
+        return null;
+
     }
 
     @Override
     public void instanciarRegistro() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Area padre = this.regis;
+        this.regis = new Area();
+        this.regis.setIdAreaPadre(padre);
     }
+    
+    
+    @Override
+    public List<Area> cargarDatos(int primero, int tamanio){
+        Integer idPadre =null;
+        if (this.regis !=null) {
+            idPadre = regis.getIdArea();
+        }
+        List<Area> lista = aBean.findByIdPadre(idPadre, 0, 10000000);
+        return lista;
+    }
+    
 
 }
