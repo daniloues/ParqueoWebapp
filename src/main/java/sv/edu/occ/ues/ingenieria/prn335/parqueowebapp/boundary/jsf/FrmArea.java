@@ -39,7 +39,7 @@ public class FrmArea extends AbstractFrm<Area> implements Serializable {
 
             for (Area next : lista) {
                 if (next.getIdAreaPadre() == null) {
-                    this.generarArbol();
+                    this.generarArbol(raiz, next);
                 }
 
             }
@@ -48,7 +48,12 @@ public class FrmArea extends AbstractFrm<Area> implements Serializable {
     
     
     public void generarArbol(TreeNode padre, Area actual){
-        DefaultTreeNode nuevoPadre =new Defa
+        DefaultTreeNode nuevoPadre =new DefaultTreeNode(actual, padre);
+        
+        List<Area> hijos = this.aBean.findByIdPadre(actual.getIdArea(), 0, 1000000000);
+        for (Area hijo : hijos) {
+            generarArbol(nuevoPadre, hijo);
+        }
     
     }
 

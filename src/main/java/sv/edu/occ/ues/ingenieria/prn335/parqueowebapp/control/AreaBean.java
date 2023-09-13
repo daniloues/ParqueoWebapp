@@ -32,7 +32,7 @@ public class AreaBean extends AbstractDataAccess<Area> implements Serializable{
         super(Area.class);
     }
     
-    public List<Area> findByIdPadre(Area idPadre, int first, int pageSize) {
+    public List<Area> findByIdPadre(Integer idPadre, int first, int pageSize) {
         if (idPadre != null && em != null) {
             Query q = em.createNamedQuery("Area.findByIdPadre");
             q.setFirstResult(first);
