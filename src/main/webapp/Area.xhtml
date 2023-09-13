@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<composition xmlns="http://xmlns.jcp.org/jsf/facelets"
+             template="./WEB-INF/templates/raiz.xhtml"
+
+
+             xmlns:h="http://xmlns.jcp.org/jsf/html"
+             xmlns:f="http://xmlns.jcp.org/jsf/core"
+             xmlns:p="http://primefaces.org/ui"
+             xmlns:btt="http://xmlns.jcp.org/jsf/composite/btnparq">
+
+    <define name="tabla">
+        <h:form>
+            <p:tree value="#{frmArea.raiz}" var="nodo" dynamic="true"
+                    selectionMode="single"
+                    selection="#{frmArea.nodoSeleccionado}"
+                    >
+                <p:ajax event="select" update=":pnlDetalle @form" listener="#{frmArea.seleccionarNodoListener}"/>
+                        <p:treeNode>
+                        <h:outputText value="#{nodo.nombre}"/>
+                    </p:treeNode>
+            </p:tree>
+            <btt:botonesTop id="btnTop" bean="#{frmArea}" refrescar="@form :pnlDetalle"/>
+        </h:form>
+
+    </define>
+    
+
+    <define name="detalle">
+        <h:panelGroup id="pnlDetalle">
+            <p:tabView cache="false" dynamic="true" rendered="#{not empty frmArea.regis}">
+                <p:tab closable="false" title="Geralidades">
+                    <h:form id="frmDetalle">
+                        <h:panelGrid>
+                            <h:outputLabel id="lblid" for="txtId" value="ID"/>
+                            <h:inputText id="txtId" value="#{frmArea.regis.idArea}" disabled="true" readonly="true"/>
+                            <p:outputLabel id="lblNombre" value="Nombre" for="txtNombre" />
+                            <p:inputText id="txtNombre" value="#{frmArea.regis.nombre}" size="75"/>
+                            <p:outputLabel id="lblDescripcion"  value="Descripcion" for="txtDescripcion"/>
+                            <p:inputTextarea id="txtDescripcion" value="#{frmArea.regis.descripcion}" cols="75" rows="3"/>
+                        </h:panelGrid>
+                    </h:form>
+                    
+                    <--<!-- FALTAN LOS BOTONES DE GUARDAR MODIFICAR (CREO) -->
+                </p:tab>
+                <p:tab closable="false" title="Espacios" disabled="#{frmArea.estado!='MODIFICAR'}">
+                
+                </p:tab>
+                
+            </p:tabView>
+
+        </h:panelGroup>
+
+    </define>
+
+</composition>
