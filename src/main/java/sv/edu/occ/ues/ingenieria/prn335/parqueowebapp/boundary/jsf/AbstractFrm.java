@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 import org.primefaces.model.FilterMeta;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortMeta;
+import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.app.entity.Area;
 import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.app.entity.TipoReserva;
 import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.control.AbstractDataAccess;
 
@@ -36,6 +37,33 @@ public abstract class AbstractFrm<T> implements Serializable {
     T regis = null;
 
     public abstract FacesContext getFacesContext();
+
+    public int contar() {
+        int resultado = 0;
+        AbstractDataAccess<T> trBean = null;
+        try {
+            trBean = getDataAccess();
+            resultado = trBean.count();
+        } catch (Exception ex) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, ex.getMessage(), ex);
+        }
+        return resultado;
+    }
+
+    public List<T> cargarDatos(int primero, int tamanio) {
+        List<T> resultado = null;
+        try {
+            AbstractDataAccess<T> trBean = getDataAccess();
+            resultado = trBean.FindRange(primero, tamanio);
+        } catch (Exception ex) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, ex.getMessage(), ex);
+        } finally {
+            if (resultado == null) {
+                resultado = Collections.EMPTY_LIST;
+            }
+        }
+        return resultado;
+    }
 
     @PostConstruct
     public void inicializar() {

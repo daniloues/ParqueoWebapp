@@ -9,7 +9,9 @@ import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import java.io.Serializable;
+import java.util.List;
 import java.util.stream.Collectors;
+import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.app.entity.Area;
 import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.app.entity.TipoEspacio;
 import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.control.AbstractDataAccess;
 import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.control.TipoEspacioBean;
@@ -59,5 +61,7 @@ public class FrmTipoEspacio extends AbstractFrm<TipoEspacio> implements Serializ
 
         this.regis = new TipoEspacio();
     }
+
+  
 
 }

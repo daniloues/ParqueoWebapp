@@ -26,7 +26,12 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "area", catalog = "parqueo", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "Area.findAll", query = "SELECT a FROM Area a")})
+    @NamedQuery(name = "Area.findAll", query = "SELECT a FROM Area a"),
+    @NamedQuery(name = "Area.findByIdArea", query = "SELECT a FROM Area a WHERE a.idArea = :idArea"),
+    @NamedQuery(name = "Area.findByNombre", query = "SELECT a FROM Area a WHERE a.nombre = :nombre"),
+    @NamedQuery(name = "Area.findByDescripcion", query = "SELECT a FROM Area a WHERE a.descripcion = :descripcion")
+
+})
 public class Area implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -126,5 +131,5 @@ public class Area implements Serializable {
     public String toString() {
         return "Entity.Area[ idArea=" + idArea + " ]";
     }
-    
+
 }

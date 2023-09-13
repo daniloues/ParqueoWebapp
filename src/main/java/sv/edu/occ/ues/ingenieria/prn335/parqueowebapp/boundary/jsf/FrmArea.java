@@ -5,6 +5,7 @@
 package sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.boundary.jsf;
 
 import jakarta.annotation.PostConstruct;
+import jakarta.enterprise.context.Dependent;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
@@ -23,7 +24,7 @@ import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.control.AreaBean;
  * @author alexo
  */
 @Named
-@ViewScoped
+@Dependent
 public class FrmArea extends AbstractFrm<Area> implements Serializable {
 
     @Inject
@@ -32,6 +33,8 @@ public class FrmArea extends AbstractFrm<Area> implements Serializable {
     AreaBean aBean;
     TreeNode raiz;
     TreeNode nodoSeleccionado;
+    @Dependent
+    
 
     @PostConstruct
     @Override
@@ -87,7 +90,6 @@ public class FrmArea extends AbstractFrm<Area> implements Serializable {
 
         }
         return null;
-
     }
 
     @Override
@@ -97,7 +99,7 @@ public class FrmArea extends AbstractFrm<Area> implements Serializable {
         this.regis.setIdAreaPadre(padre);
     }
 
-    //Aqui deberia ir un @Override
+    @Override
     public List<Area> cargarDatos(int primero, int tamanio) {
         Integer idPadre = null;
         if (this.regis != null) {
@@ -106,6 +108,8 @@ public class FrmArea extends AbstractFrm<Area> implements Serializable {
         List<Area> lista = aBean.findByIdPadre(idPadre, 0, 10000000);
         return lista;
     }
+    
+    
 
     public TreeNode getRaiz() {
         return raiz;

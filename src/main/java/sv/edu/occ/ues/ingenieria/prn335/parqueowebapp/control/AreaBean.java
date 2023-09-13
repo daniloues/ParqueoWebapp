@@ -24,10 +24,9 @@ import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.app.entity.TipoReserva;
  */
 @Stateless
 @LocalBean
-public class AreaBean extends AbstractDataAccess<Area> implements Serializable{
-    
+public class AreaBean extends AbstractDataAccess<Area> implements Serializable {
 
-   @PersistenceContext(unitName = "parqueoPU")
+    @PersistenceContext(unitName = "parqueoPU")
     EntityManager em;
 
     @Override
@@ -38,21 +37,43 @@ public class AreaBean extends AbstractDataAccess<Area> implements Serializable{
     public AreaBean() {
         super(Area.class);
     }
+
+//    public List<Area> findByIdPadre(final Integer idPadre, int primero, int tamanio) {
+//        if (idPadre != null && em != null) {
+//            Query q = em.createNamedQuery("Area.findByIdPadre");
+//            q.setFirstResult(primero);
+//            q.setMaxResults(tamanio);
+//            q.setParameter("idPadre", idPadre);
+//            return q.getResultList();
+//        }
+//        return Collections.EMPTY_LIST;
+//    }
     
-    
-    
-    
-    public List<Area> findByIdPadre(Integer idPadre, int primero, int tamanio) {
-        if (idPadre != null && em != null) {
-            Query q = em.createNamedQuery("Area.findByIdPadre");
-            q.setFirstResult(primero);
-            q.setMaxResults(tamanio);
-            q.setParameter("idPadre", idPadre);
-            return q.getResultList();
+    public List<Area> findByIdPadre(final Integer idPadre, int primero, int tamanio) {
+        if (idPadre != null && primero >= 0 && tamanio > 0) {
+            if (em != null) {
+                Query q = em.createNamedQuery("Area.findByIdArea");
+                q.setParameter("idPadre", idPadre);
+                q.setFirstResult(primero);
+                q.setMaxResults(tamanio);
+                return q.getResultList();
+
+            }
+
         }
         return Collections.EMPTY_LIST;
     }
     
-    //NO SE SI ME FALTA UN METODO MAS O ALGUNA PROPIEDAD QUE PENYA TIENE EN SU AreaBean QUE YO NO TENGO
+    public int contarByIdPadre(final Integer idPadre) {
+        if (idPadre != null && em != null) {
+            Query q = em.createNamedQuery("Area.findByNombre");
+            q.setParameter("idPadre", idPadre);
+            return ((Long) q.getSingleResult()).intValue();
+        }
+        return 0;
+    }
+    
+
+    //NO SE SI ME FALTA UN METODO MAS O ALGUNA PROPIEDAD QUE EL INGE TIENE EN SU AreaBean QUE YO NO TENGO
     //TAMBIEN PUEDA SER QUE EL METODO QUE TENGO LE FALTEN MAS COSAS
 }

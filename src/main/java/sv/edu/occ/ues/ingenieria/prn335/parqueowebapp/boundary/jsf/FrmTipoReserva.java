@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 import org.primefaces.model.FilterMeta;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortMeta;
+import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.app.entity.Area;
 import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.app.entity.TipoReserva;
 import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.control.AbstractDataAccess;
 import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.control.TipoReservaBean;
@@ -70,6 +71,11 @@ public class FrmTipoReserva extends AbstractFrm<TipoReserva> implements Serializ
     public void instanciarRegistro() {
         this.regis=new TipoReserva();
 
+    }
+
+    @Override
+    public List<TipoReserva> cargarDatos(int primero, int tamanio) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }
