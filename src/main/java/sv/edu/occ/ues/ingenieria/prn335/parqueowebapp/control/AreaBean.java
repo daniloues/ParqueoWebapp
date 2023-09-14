@@ -52,12 +52,12 @@ public class AreaBean extends AbstractDataAccess<Area> implements Serializable {
         if (idPadre != null && primero >= 0 && tamanio > 0) {
             if (em != null) {
                 Query q = em.createNamedQuery("Area.findByIdPadre");
-                q.setParameter("idPadre", idPadre);
+                q.setParameter("idAreaPadre", idPadre);
                 q.setFirstResult(primero);
                 q.setMaxResults(tamanio);
                 return q.getResultList();
 
-            }
+            }  
 
         }
         return Collections.EMPTY_LIST;
@@ -66,7 +66,7 @@ public class AreaBean extends AbstractDataAccess<Area> implements Serializable {
     public int contarByIdPadre(final Integer idPadre) {
         if (idPadre != null && em != null) {
             Query q = em.createNamedQuery("Area.coundByIdPadre");
-            q.setParameter("idPadre", idPadre);
+            q.setParameter("idAreaPadre", idPadre);
             return ((Long) q.getSingleResult()).intValue();
         }
         return 0;

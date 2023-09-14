@@ -26,7 +26,11 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "espacio", catalog = "parqueo", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "Espacio.findAll", query = "SELECT e FROM Espacio e")})
+    @NamedQuery(name = "Espacio.findAll", query = "SELECT e FROM Espacio e"),
+    @NamedQuery(name = "Espacio.findByIdArea", query = "SELECT e FROM Espacio e WHERE e.idArea.idArea= :idArea ORDER BY e.nombre ASC"),
+    @NamedQuery(name = "Espacio.countByIdArea", query = "SELECT COUNT(e.idEspacio) FROM Espacio e WHERE e.idArea.idArea= :idArea")
+
+})
 public class Espacio implements Serializable {
 
     private static final long serialVersionUID = 1L;
