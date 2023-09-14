@@ -5,7 +5,6 @@
 package sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.boundary.jsf;
 
 import jakarta.annotation.PostConstruct;
-import jakarta.enterprise.context.Dependent;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
@@ -13,6 +12,7 @@ import jakarta.inject.Named;
 import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.primefaces.event.NodeSelectEvent;
 import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.TreeNode;
 import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.app.entity.Area;
@@ -24,7 +24,7 @@ import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.control.AreaBean;
  * @author alexo
  */
 @Named
-@Dependent
+@ViewScoped
 public class FrmArea extends AbstractFrm<Area> implements Serializable {
 
     @Inject
@@ -33,7 +33,6 @@ public class FrmArea extends AbstractFrm<Area> implements Serializable {
     AreaBean aBean;
     TreeNode raiz;
     TreeNode nodoSeleccionado;
-    @Dependent
     
 
     @PostConstruct
@@ -125,6 +124,11 @@ public class FrmArea extends AbstractFrm<Area> implements Serializable {
 
     public void setNodoSeleccionado(TreeNode nodoSeleccionado) {
         this.nodoSeleccionado = nodoSeleccionado;
+    }
+    
+    public void seleccionarNodoListener(NodeSelectEvent nse){
+        this.regis = (Area) nse.getTreeNode().getData();
+        this.seleccionarRegistro();
     }
 
 }
