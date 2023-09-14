@@ -113,7 +113,7 @@ public class EspacioCaracteristica implements Serializable {
 
     @Override
     public String toString() {
-        return "Entity.EspacioCaracteristica[ idEspacioCaracteristica=" + idEspacioCaracteristica + " ]";
+        return "sv.edu.occ.ues.ingenieria.prn335.mapeo.mapeo.EspacioCaracteristica[ idEspacioCaracteristica=" + idEspacioCaracteristica + " ]";
     }
     
 }

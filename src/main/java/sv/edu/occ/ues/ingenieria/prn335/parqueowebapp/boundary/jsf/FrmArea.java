@@ -28,11 +28,14 @@ import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.control.AreaBean;
 public class FrmArea extends AbstractFrm<Area> implements Serializable {
 
     @Inject
+    FrmEspacio frmEspacio;
+    @Inject
     FacesContext fc;
     @Inject
     AreaBean aBean;
     TreeNode raiz;
     TreeNode nodoSeleccionado;
+    
     
 
     @PostConstruct
@@ -129,6 +132,15 @@ public class FrmArea extends AbstractFrm<Area> implements Serializable {
     public void seleccionarNodoListener(NodeSelectEvent nse){
         this.regis = (Area) nse.getTreeNode().getData();
         this.seleccionarRegistro();
+        if (this.regis!=null && this.regis.getIdArea()!=null && this.frmEspacio!=null) {
+            this.frmEspacio.setIdArea(this.regis.getIdArea());
+        }
     }
+
+    public FrmEspacio getFrmEspacio() {
+        return frmEspacio;
+    }
+    
+    
 
 }

@@ -73,9 +73,6 @@ public class FrmTipoReserva extends AbstractFrm<TipoReserva> implements Serializ
 
     }
 
-    @Override
-    public List<TipoReserva> cargarDatos(int primero, int tamanio) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+    
 
 }

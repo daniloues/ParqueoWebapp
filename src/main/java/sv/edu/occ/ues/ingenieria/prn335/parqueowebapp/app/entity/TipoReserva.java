@@ -16,14 +16,12 @@ import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 
 /**
  *
  * @author alexo
  */
-    @Entity
+@Entity
 @Table(name = "tipo_reserva", catalog = "parqueo", schema = "public")
 @NamedQueries({
     @NamedQuery(name = "TipoReserva.findAll", query = "SELECT t FROM TipoReserva t")})
@@ -35,8 +33,6 @@ public class TipoReserva implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_tipo_reserva")
     private Integer idTipoReserva;
-    @NotBlank(message = "El nombre no puede estar en blanco")
-    @Size(min = 3, max = 155, message = "El nombre debe poseer entre 3 y 155 caracteres")
     @Column(name = "nombre")
     private String nombre;
     @Column(name = "publico")
@@ -125,7 +121,7 @@ public class TipoReserva implements Serializable {
 
     @Override
     public String toString() {
-        return "Entity.TipoReserva[ idTipoReserva=" + idTipoReserva + " ]";
+        return "sv.edu.occ.ues.ingenieria.prn335.mapeo.mapeo.TipoReserva[ idTipoReserva=" + idTipoReserva + " ]";
     }
     
 }

@@ -76,34 +76,13 @@ public abstract class AbstractFrm<T> implements Serializable {
         this.modelo = new LazyDataModel<T>() {
             @Override
             public int count(Map<String, FilterMeta> map) {
-                int resultado = 0;
-                AbstractDataAccess<T> trBean = null;
-                try {
-                    trBean = getDataAccess();
-                    resultado = trBean.count();
-                } catch (Exception ex) {
-                    Logger.getLogger(getClass().getName()).log(Level.SEVERE, ex.getMessage(), ex);
-                }
-
-                return resultado;
+                return contar();
             }
 
             @Override
             public List<T> load(int primero, int tamanio, Map<String, SortMeta> map, Map<String, FilterMeta> map1) {
 
-                List<T> resultado = null;
-                try {
-                    AbstractDataAccess<T> trBean = getDataAccess();
-                    resultado = trBean.FindRange(primero, tamanio);
-                } catch (Exception ex) {
-                    Logger.getLogger(getClass().getName()).log(Level.SEVERE, ex.getMessage(), ex);
-                } finally {
-                    if (resultado == null) {
-                        resultado = Collections.EMPTY_LIST;
-                    }
-                }
-
-                return resultado;
+                return cargarDatos(primero, tamanio);
             }
 
             @Override

@@ -135,7 +135,7 @@ public class TipoReservaSecuencia implements Serializable {
 
     @Override
     public String toString() {
-        return "Entity.TipoReservaSecuencia[ idTipoReservaSecuencia=" + idTipoReservaSecuencia + " ]";
+        return "sv.edu.occ.ues.ingenieria.prn335.mapeo.mapeo.TipoReservaSecuencia[ idTipoReservaSecuencia=" + idTipoReservaSecuencia + " ]";
     }
     
 }

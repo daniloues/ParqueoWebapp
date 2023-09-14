@@ -140,7 +140,7 @@ public class Reserva implements Serializable {
 
     @Override
     public String toString() {
-        return "Entity.Reserva[ idReserva=" + idReserva + " ]";
+        return "sv.edu.occ.ues.ingenieria.prn335.mapeo.mapeo.Reserva[ idReserva=" + idReserva + " ]";
     }
     
 }

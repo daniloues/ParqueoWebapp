@@ -9,14 +9,11 @@ import java.util.List;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotNull;
 
 /**
  *
@@ -25,14 +22,13 @@ import jakarta.validation.constraints.NotNull;
 @Entity
 @Table(name = "tipo_espacio", catalog = "parqueo", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "TipoEspacio.findAll", query = "SELECT t FROM TipoEspacio t ORDER BY t.nombre ASC")})
+    @NamedQuery(name = "TipoEspacio.findAll", query = "SELECT t FROM TipoEspacio t")})
 public class TipoEspacio implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @Column(name = "id_tipo_espacio")
-    @NotNull
     private Integer idTipoEspacio;
     @Column(name = "nombre")
     private String nombre;
@@ -92,7 +88,7 @@ public class TipoEspacio implements Serializable {
 
     @Override
     public String toString() {
-        return "Entity.TipoEspacio[ idTipoEspacio=" + idTipoEspacio + " ]";
+        return "sv.edu.occ.ues.ingenieria.prn335.mapeo.mapeo.TipoEspacio[ idTipoEspacio=" + idTipoEspacio + " ]";
     }
-
+    
 }

@@ -114,7 +114,7 @@ public class ReservaHistorial implements Serializable {
 
     @Override
     public String toString() {
-        return "Entity.ReservaHistorial[ idReservaHistorial=" + idReservaHistorial + " ]";
+        return "sv.edu.occ.ues.ingenieria.prn335.mapeo.mapeo.ReservaHistorial[ idReservaHistorial=" + idReservaHistorial + " ]";
     }
     
 }

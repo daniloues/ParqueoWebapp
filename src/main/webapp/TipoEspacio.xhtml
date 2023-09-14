@@ -10,16 +10,17 @@
 
     <define name="tabla">
         <h:form id="frmTabla" >
-            <p:dataTable value="#{frmTipoEspacio.modelo}" var="r"
-                         lazy="true"
-                         paginator="true"
-                         rows="3"
-                         first="0"
-                         selectionMode="single"
-                         selection="#{frmTipoEspacio.regis}"
-                         rendered="#{empty frmTipoEspacio.regis}"
+            <p:dataTable 
+                value="#{frmTipoEspacio.modelo}" var="r"
+                lazy="true"
+                paginator="true"
+                rows="3"
+                first="0"
+                selectionMode="single"
+                selection="#{frmTipoEspacio.regis}"
+                rendered="#{empty frmTipoEspacio.regis}"
 
-                         >
+                >
 
                 <p:ajax process="@this" update=":pnlDetalle @form" 
                         listener="#{frmTipoEspacio.seleccionarRegistro}"
