@@ -28,9 +28,8 @@ import jakarta.persistence.Table;
 @NamedQueries({
     @NamedQuery(name = "Area.findAll", query = "SELECT a FROM Area a"),
     @NamedQuery(name = "Area.coundByIdPadre", query = "SELECT COUNT(a.idArea) FROM Area a WHERE a.idAreaPadre.idArea = :idAreaPadre"),
-    @NamedQuery(name = "Area.findByIdPadre", query = "SELECT a FROM Area a WHERE a.idAreaPadre.idArea= : idAreaPadre ORDER BY a.nombre ASC"),
-    @NamedQuery(name = "Area.findRaices", query = "SELECT a FROM Area a WHERE a.idAreaPadre IS IS NULL ORDER BY a.nombre ASC")
-    
+    @NamedQuery(name = "Area.findByIdPadre", query = "SELECT a FROM Area a WHERE a.idAreaPadre.idArea = :idAreaPadre ORDER BY a.nombre ASC"),
+    @NamedQuery(name = "Area.findRaices", query = "SELECT a FROM Area a WHERE a.idAreaPadre IS NULL ORDER BY a.nombre ASC")
 
 })
 public class Area implements Serializable {

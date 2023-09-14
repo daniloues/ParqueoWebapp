@@ -48,11 +48,10 @@ public class AreaBean extends AbstractDataAccess<Area> implements Serializable {
 //        }
 //        return Collections.EMPTY_LIST;
 //    }
-    
     public List<Area> findByIdPadre(final Integer idPadre, int primero, int tamanio) {
         if (idPadre != null && primero >= 0 && tamanio > 0) {
             if (em != null) {
-                Query q = em.createNamedQuery("Area.findByIdArea");
+                Query q = em.createNamedQuery("Area.findByIdPadre");
                 q.setParameter("idPadre", idPadre);
                 q.setFirstResult(primero);
                 q.setMaxResults(tamanio);
@@ -63,16 +62,25 @@ public class AreaBean extends AbstractDataAccess<Area> implements Serializable {
         }
         return Collections.EMPTY_LIST;
     }
-    
+
     public int contarByIdPadre(final Integer idPadre) {
         if (idPadre != null && em != null) {
-            Query q = em.createNamedQuery("Area.findByNombre");
+            Query q = em.createNamedQuery("Area.coundByIdPadre");
             q.setParameter("idPadre", idPadre);
             return ((Long) q.getSingleResult()).intValue();
         }
         return 0;
     }
-    
+
+    public List<Area> findRaices(int primero, int tamanio) {
+        if (em != null) {
+            Query q = em.createNamedQuery("Area.findRaices");
+            q.setFirstResult(primero);
+            q.setMaxResults(tamanio);
+            return q.getResultList();
+        }
+        return Collections.EMPTY_LIST;
+    }
 
     //NO SE SI ME FALTA UN METODO MAS O ALGUNA PROPIEDAD QUE EL INGE TIENE EN SU AreaBean QUE YO NO TENGO
     //TAMBIEN PUEDA SER QUE EL METODO QUE TENGO LE FALTEN MAS COSAS
