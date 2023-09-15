@@ -76,5 +76,7 @@ public class AreaBean extends AbstractDataAccess<Area> implements Serializable {
 //        }
 //        return Collections.emptyList();
 //    }
+    
+    
 
 }

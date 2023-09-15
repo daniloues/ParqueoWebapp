@@ -53,7 +53,7 @@ public class EspacioBean extends AbstractDataAccess<Espacio> implements Serializ
     public int contarByIdArea(final Integer idArea) {
         if (idArea != null && em != null) {
             Query q = em.createNamedQuery("Espacio.countByIdArea");
-            q.setParameter("idPadre", idArea);
+            q.setParameter("idArea", idArea);
             return ((Long) q.getSingleResult()).intValue();
         }
         return 0;

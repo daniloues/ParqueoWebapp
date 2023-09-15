@@ -42,8 +42,7 @@ public class FrmArea extends AbstractFrm<Area> implements Serializable {
     public void inicializar() {
         super.inicializar();
         this.raiz = new DefaultTreeNode("Areas", null);
-        List<Area> lista = aBean.findRaices(0, 10000000);
-
+        List<Area> lista = aBean.findRaices(0, 1000000000);
         if (lista != null && !lista.isEmpty()) {
 
             for (Area next : lista) {

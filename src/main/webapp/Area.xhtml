@@ -74,11 +74,11 @@
 
                             </p:column>
                             <btt:botonesTop bean="#{frmArea.frmEspacio}" refrescar=":tabDetalle:pnlDetalleEspacio @form"/>
-
                         </p:dataTable>
 
+
                     </h:form>
-                    
+
                     <h:panelGrid id="pnlDetalleEspacio">
                         <h:form id="frmDetalleEspacio" rendered="#{not empty frmArea.frmEspacio.regis}">
                             <h:panelGrid columns="2">
@@ -87,12 +87,12 @@
                                              disabled="true" readonly="true"/>
                                 <p:outputLabel for="txtNombreEspacio" value="Nombre"/>
                                 <p:inputText id="txtNombreEspacio" value="#{frmArea.frmEspacio.regis.nombre}" size="70"/>
-                                
+
                             </h:panelGrid>
-                            
-                            
+
+
                         </h:form>
-                        
+
                     </h:panelGrid>
 
 
