@@ -4,19 +4,16 @@
  */
 package sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.control;
 
-import jakarta.ejb.Local;
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
-import jakarta.faces.view.ViewScoped;
-import jakarta.inject.Named;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
+import jakarta.persistence.TypedQuery;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.app.entity.Area;
-import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.app.entity.TipoReserva;
 
 /**
  *
@@ -38,16 +35,6 @@ public class AreaBean extends AbstractDataAccess<Area> implements Serializable {
         super(Area.class);
     }
 
-//    public List<Area> findByIdPadre(final Integer idPadre, int primero, int tamanio) {
-//        if (idPadre != null && em != null) {
-//            Query q = em.createNamedQuery("Area.findByIdPadre");
-//            q.setFirstResult(primero);
-//            q.setMaxResults(tamanio);
-//            q.setParameter("idPadre", idPadre);
-//            return q.getResultList();
-//        }
-//        return Collections.EMPTY_LIST;
-//    }
     public List<Area> findByIdPadre(final Integer idPadre, int primero, int tamanio) {
         if (idPadre != null && primero >= 0 && tamanio > 0) {
             if (em != null) {
@@ -57,7 +44,7 @@ public class AreaBean extends AbstractDataAccess<Area> implements Serializable {
                 q.setMaxResults(tamanio);
                 return q.getResultList();
 
-            }  
+            }
 
         }
         return Collections.EMPTY_LIST;
@@ -81,7 +68,13 @@ public class AreaBean extends AbstractDataAccess<Area> implements Serializable {
         }
         return Collections.EMPTY_LIST;
     }
+//
+//    public List<Area> cargarRaices() {
+//        if (em != null) {
+//            TypedQuery<Area> query = em.createNamedQuery("Area.findRaices", Area.class);
+//            return query.getResultList();
+//        }
+//        return Collections.emptyList();
+//    }
 
-    //NO SE SI ME FALTA UN METODO MAS O ALGUNA PROPIEDAD QUE EL INGE TIENE EN SU AreaBean QUE YO NO TENGO
-    //TAMBIEN PUEDA SER QUE EL METODO QUE TENGO LE FALTEN MAS COSAS
 }

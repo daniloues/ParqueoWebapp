@@ -14,12 +14,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 import org.primefaces.model.FilterMeta;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortMeta;
-import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.app.entity.Area;
-import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.app.entity.TipoReserva;
 import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.control.AbstractDataAccess;
 
 /**

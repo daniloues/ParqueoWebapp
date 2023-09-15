@@ -32,18 +32,17 @@ public class FrmArea extends AbstractFrm<Area> implements Serializable {
     @Inject
     FacesContext fc;
     @Inject
+            
     AreaBean aBean;
     TreeNode raiz;
     TreeNode nodoSeleccionado;
-    
-    
 
     @PostConstruct
     @Override
     public void inicializar() {
         super.inicializar();
         this.raiz = new DefaultTreeNode("Areas", null);
-        List<Area> lista = aBean.findByIdPadre(null, 0, 100000000);
+        List<Area> lista = aBean.findRaices(0, 10000000);
 
         if (lista != null && !lista.isEmpty()) {
 
@@ -110,8 +109,6 @@ public class FrmArea extends AbstractFrm<Area> implements Serializable {
         List<Area> lista = aBean.findByIdPadre(idPadre, 0, 10000000);
         return lista;
     }
-    
-    
 
     public TreeNode getRaiz() {
         return raiz;
@@ -128,11 +125,11 @@ public class FrmArea extends AbstractFrm<Area> implements Serializable {
     public void setNodoSeleccionado(TreeNode nodoSeleccionado) {
         this.nodoSeleccionado = nodoSeleccionado;
     }
-    
-    public void seleccionarNodoListener(NodeSelectEvent nse){
+
+    public void seleccionarNodoListener(NodeSelectEvent nse) {
         this.regis = (Area) nse.getTreeNode().getData();
         this.seleccionarRegistro();
-        if (this.regis!=null && this.regis.getIdArea()!=null && this.frmEspacio!=null) {
+        if (this.regis != null && this.regis.getIdArea() != null && this.frmEspacio != null) {
             this.frmEspacio.setIdArea(this.regis.getIdArea());
         }
     }
@@ -140,7 +137,6 @@ public class FrmArea extends AbstractFrm<Area> implements Serializable {
     public FrmEspacio getFrmEspacio() {
         return frmEspacio;
     }
-    
     
 
 }
