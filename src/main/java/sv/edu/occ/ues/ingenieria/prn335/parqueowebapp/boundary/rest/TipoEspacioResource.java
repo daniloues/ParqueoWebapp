@@ -13,8 +13,11 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.UriInfo;
+import java.net.URI;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -71,14 +74,28 @@ public class TipoEspacioResource {
     @POST
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
-    public Response creat(TipoEspacio registro) {
+    public Response creat(TipoEspacio registro,
+            @Context UriInfo info
+    ) {
         if (registro != null && registro.getIdTipoEspacio() != null && registro.getNombre() != null) {
 
             try {
                 teBean.create(registro);
+                URI requestUri = info.getRequestUri();
+
+                return Response.status(Response.Status.CREATED)
+                        .header("location",
+                                requestUri.toString() + "/"
+                                + registro.getIdTipoEspacio())
+                        .build();
+
             } catch (Exception ex) {
                 Logger.getLogger(getClass().getName()).log(Level.SEVERE, ex.getMessage(), ex);
             }
+
+            return Response.status(500)
+                    .header("create-exception", registro.toString())
+                    .build();
         }
 
         return Response.status(422).
