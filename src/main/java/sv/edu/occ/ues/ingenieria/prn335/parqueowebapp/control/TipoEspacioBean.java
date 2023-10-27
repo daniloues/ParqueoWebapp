@@ -9,6 +9,9 @@ import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import java.io.Serializable;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.app.entity.TipoEspacio;
 
 /**
@@ -29,6 +32,18 @@ public class TipoEspacioBean extends AbstractDataAccess<TipoEspacio> implements 
 
     public TipoEspacioBean() {
         super(TipoEspacio.class);
+    }
+
+    public List<TipoEspacio> findRangeSlow(int first, int pageSize) {
+
+        try {
+            Thread.sleep(2000);
+
+        } catch (Exception ex) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, ex.getMessage(), ex);
+        }
+
+        return this.FindRange(first, pageSize);
     }
 
 }
