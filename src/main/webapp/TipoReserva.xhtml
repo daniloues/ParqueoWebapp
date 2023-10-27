@@ -69,21 +69,9 @@
 
                 </h:panelGrid>
 
-
-                <p:commandButton value="Guardar" 
-                                 actionListener="#{frmTipoReserva.btnGuardarHandler}"
-                                 update="@form :frmTabla"
-                                 rendered="#{frmTipoReserva.estado=='NUEVO'}"
-                                 />
-                <p:commandButton value="Modificar" 
-                                 rendered="#{frmTipoReserva.estado=='MODIFICAR'}"
-                                 update=":pnlDetalle :frmTabla"
-                                 actionListener="#{frmTipoReserva.btnModificarHandler}"/>
-                <p:commandButton value="Eliminar" 
-                                 rendered="#{frmTipoReserva.estado=='MODIFICAR'}"
-                                 update=":pnlDetalle :frmTabla"
-                                 actionListener="#{frmTipoReserva.btnEliminarHandler}"/>
-
+                <!-- Generalizacion de botones de guardar, eliminiar y modificar -->
+                
+                <btnparq:botonesButtom bean="#{frmTipoReserva}"/>
 
                 <p:messages/>
             </h:form>

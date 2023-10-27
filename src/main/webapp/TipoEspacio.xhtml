@@ -58,21 +58,8 @@
 
                 </h:panelGrid>
 
-                <h:panelGrid columns="3">
-                    <p:commandButton value="Guardar" 
-                                     actionListener="#{frmTipoEspacio.btnGuardarHandler}"
-                                     update="@form :frmTabla"
-                                     rendered="#{frmTipoEspacio.estado=='NUEVO'}"
-                                     />
-                    <p:commandButton value="Modificar" 
-                                     rendered="#{frmTipoEspacio.estado=='MODIFICAR'}"
-                                     update=":pnlDetalle :frmTabla"
-                                     actionListener="#{frmTipoEspacio.btnModificarHandler}"/>
-                    <p:commandButton value="Eliminar" 
-                                     rendered="#{frmTipoEspacio.estado=='MODIFICAR'}"
-                                     update=":pnlDetalle :frmTabla"
-                                     actionListener="#{frmTipoEspacio.btnEliminarHandler}"/>
-                </h:panelGrid>
+                <btt:botonesButtom bean="#{frmTipoEspacio}"/>
+
                 <p:messages/>
             </h:form>
 

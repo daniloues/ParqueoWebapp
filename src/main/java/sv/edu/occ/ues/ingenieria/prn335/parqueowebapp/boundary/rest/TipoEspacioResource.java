@@ -9,6 +9,7 @@ import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DefaultValue;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
+import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
@@ -74,7 +75,7 @@ public class TipoEspacioResource {
     @POST
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
-    public Response creat(TipoEspacio registro,
+    public Response create(TipoEspacio registro,
             @Context UriInfo info
     ) {
         if (registro != null && registro.getIdTipoEspacio() != null && registro.getNombre() != null) {

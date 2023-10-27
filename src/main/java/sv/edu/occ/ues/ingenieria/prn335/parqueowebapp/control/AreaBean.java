@@ -35,31 +35,6 @@ public class AreaBean extends AbstractDataAccess<Area> implements Serializable {
         super(Area.class);
     }
 
-//    public List<Area> findByIdPadre(final Integer idPadre, int primero, int tamanio) {
-//        if (idPadre == null && primero >= 0 && tamanio > 0) {
-//            if (em != null) {
-//                Query q = em.createNamedQuery("Area.findByIdPadre");
-//                q.setParameter("idAreaPadre", idPadre);
-//                q.setFirstResult(primero);
-//                q.setMaxResults(tamanio);
-//                return q.getResultList();
-//
-//            }
-//
-//        }
-//        return Collections.EMPTY_LIST;
-//    }
-
-//    public List<Area> findRaices(int primero, int tamanio) {
-//        if (em != null) {
-//            Query q = em.createNamedQuery("Area.findRaices");
-//            q.setFirstResult(primero);
-//            q.setMaxResults(tamanio);
-//            return q.getResultList();
-//        }
-//        return Collections.EMPTY_LIST;
-//    }
-
     public int contarByIdPadre(final Integer idPadre) {
         if (idPadre != null && em != null) {
             Query q = em.createNamedQuery("Area.coundByIdPadre");
@@ -68,26 +43,21 @@ public class AreaBean extends AbstractDataAccess<Area> implements Serializable {
         }
         return 0;
     }
-//
-//    
 
-    
     public List<Area> findByIdPadre(final Integer idPadre, int primero, int tamanio) {
-    if (primero >= 0 && tamanio > 0 && em != null) {
-        Query q;
-        if (idPadre == null) {
-            // Si idPadre es null, buscamos las áreas raíz
-            q = em.createNamedQuery("Area.findRaices");
-        } else {
-            // Si idPadre no es null, buscamos las áreas por idPadre
-            q = em.createNamedQuery("Area.findByIdPadre");
-            q.setParameter("idAreaPadre", idPadre);
+        if (primero >= 0 && tamanio > 0 && em != null) {
+            Query q;
+            if (idPadre == null) {
+                q = em.createNamedQuery("Area.findRaices");
+            } else {
+                q = em.createNamedQuery("Area.findByIdPadre");
+                q.setParameter("idAreaPadre", idPadre);
+            }
+            q.setFirstResult(primero);
+            q.setMaxResults(tamanio);
+            return q.getResultList();
         }
-        q.setFirstResult(primero);
-        q.setMaxResults(tamanio);
-        return q.getResultList();
+        return Collections.EMPTY_LIST;
     }
-    return Collections.EMPTY_LIST;
-}
-    
+
 }

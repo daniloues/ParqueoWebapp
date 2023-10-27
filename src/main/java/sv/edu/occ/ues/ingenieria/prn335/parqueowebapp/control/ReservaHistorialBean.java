@@ -9,7 +9,7 @@ import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import java.io.Serializable;
-import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.app.entity.TipoEspacio;
+import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.app.entity.ReservaHistorial;
 
 /**
  *
@@ -17,7 +17,7 @@ import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.app.entity.TipoEspacio;
  */
 @Stateless
 @LocalBean
-public class TipoEspacioBean extends AbstractDataAccess<TipoEspacio> implements Serializable {
+public class ReservaHistorialBean extends AbstractDataAccess<ReservaHistorial> implements Serializable {
 
     @PersistenceContext(unitName = "parqueoPU")
     EntityManager em;
@@ -27,8 +27,8 @@ public class TipoEspacioBean extends AbstractDataAccess<TipoEspacio> implements 
         return em;
     }
 
-    public TipoEspacioBean() {
-        super(TipoEspacio.class);
+    public ReservaHistorialBean() {
+        super(ReservaHistorial.class);
     }
 
 }
