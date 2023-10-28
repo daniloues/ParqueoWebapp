@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.6.final using JasperReports Library version 6.20.6-5c96b6aa8a39ac1dc6b6bea4b81168e16dd39231  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Espacio" pageWidth="612" pageHeight="792" columnWidth="612" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="14b94c5b-f403-46de-bad5-a47a2090a3e4">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="PRN335_2023/DbPrqueo.jrdax"/>
+	<parameter name="id_area" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[1]]></defaultValueExpression>
+	</parameter>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+e.nombre, e.observaciones,e.activo
+FROM espacio e
+WHERE
+e.id_area= $P{id_area}]]>
+	</queryString>
+	<field name="nombre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nombre"/>
+		<property name="com.jaspersoft.studio.field.label" value="nombre"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="espacio"/>
+	</field>
+	<field name="observaciones" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="observaciones"/>
+		<property name="com.jaspersoft.studio.field.label" value="observaciones"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="espacio"/>
+	</field>
+	<field name="activo" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.name" value="activo"/>
+		<property name="com.jaspersoft.studio.field.label" value="activo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="espacio"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="48" splitType="Stretch">
+			<textField>
+				<reportElement x="30" y="10" width="187" height="20" uuid="2cde0199-7565-46f1-b704-88ae957a0628">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c854d3f8-7f8b-400f-b761-8ec4fb924fff"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement x="240" y="10" width="180" height="20" uuid="61a811f2-fd40-4bfc-affd-001dcbd216c2">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c4914685-68f2-4a93-b988-57d84d074e12"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{activo}?"ACTIVO":"INACTIVO"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="442" y="10" width="140" height="20" uuid="6abc26da-bf37-4fc1-898f-e5f88ea29866">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="962d90eb-67cc-4961-b676-57a92c140d1d"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{observaciones}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
