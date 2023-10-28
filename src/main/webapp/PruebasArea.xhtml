@@ -10,8 +10,7 @@
         <h:form>
             <p:tree value="#{frmArea.raiz}" var="nodo" dynamic="true"
                     selectionMode="single"
-                    selection="#{frmArea.nodoSeleccionado}"
-                    >
+                    selection="#{frmArea.nodoSeleccionado}">
                 <p:ajax event="select" update=":pnlDetalle @form" listener="#{frmArea.seleccionarNodoListener}"/>
                 <p:treeNode>
                     <h:outputText value="#{nodo.nombre}"/>
@@ -19,90 +18,62 @@
             </p:tree>
             <btt:botonesTop id="btnTop" bean="#{frmArea}" refrescar="@form :pnlDetalle"/>
         </h:form>
-
     </define>
-
 
     <define name="detalle">
         <h:panelGroup id="pnlDetalle">
             <p:tabView id="tabDetalle" cache="false" dynamic="true" rendered="#{not empty frmArea.regis}">
-                <p:tab closable="false" title="Geralidades">
+                <p:tab closable="false" title="Generalidades">
                     <h:form id="frmDetalle">
-                        <h:panelGrid columns="2">
-                            <h:outputLabel id="lblid" for="txtId" value="ID"/>
+                        <p:panelGrid columns="2">
+                            <p:outputLabel id="lblid" for="txtId" value="ID"/>
                             <h:inputText id="txtId" value="#{frmArea.regis.idArea}" disabled="true" readonly="true"/>
-                            <p:outputLabel id="lblNombre" value="Nombre" for="txtNombre" />
+                            <p:outputLabel id="lblNombre" value="Nombre" for="txtNombre"/>
                             <p:inputText id="txtNombre" value="#{frmArea.regis.nombre}" size="75"/>
-                            <p:outputLabel id="lblDescripcion"  value="Descripcion" for="txtDescripcion"/>
+                            <p:outputLabel id="lblDescripcion" value="Descripcion" for="txtDescripcion"/>
                             <p:inputTextarea id="txtDescripcion" value="#{frmArea.regis.descripcion}" cols="75" rows="3"/>
-                        </h:panelGrid>
+                        </p:panelGrid>
                     </h:form>
-
-
                 </p:tab>
-                <p:tab closable="false" title="Espacios" disabled="#{frmArea.estado!='MODIFICAR'}">
-
+                <p:tab closable="false" title="Espacios" disabled="#{frmArea.estado != 'MODIFICAR'}">
                     <h:form id="frmTblEspacio">
-                        <p:dataTable 
-                            value="#{frmArea.frmEspacio.modelo}" var="re"
-                            lazy="true"
-                            paginator="true"
-                            rows="3"
-                            first="0"
-                            selectionMode="single"
-                            selection="#{frmArea.frmEspacio.regis}"
-                            rendered="#{empty frmArea.frmEspacio.regis}"
-                            >
-
-                            <p:ajax process="@this" update=":tabDetalle:pnlDetalleEspacio @form" 
+                        <p:dataTable value="#{frmArea.frmEspacio.modelo}" var="re"
+                                     lazy="true" paginator="true" rows="3"
+                                     first="0" selectionMode="single"
+                                     selection="#{frmArea.frmEspacio.regis}"
+                                     rendered="#{empty frmArea.frmEspacio.regis}">
+                            <p:ajax process="@this" update=":tabDetalle:pnlDetalleEspacio @form"
                                     listener="#{frmArea.frmEspacio.seleccionarRegistro}"
                                     event="rowSelect"/>
-
                             <p:column headerText="ID">
                                 <h:outputText value="#{re.idEspacio}"/>
                             </p:column>
                             <p:column headerText="NOMBRE">
                                 <h:outputText value="#{re.nombre}"/>
-
                             </p:column>
                             <p:column headerText="OBSERVACIONES">
                                 <h:outputText value="#{re.observaciones}"/>
-
                             </p:column>
                             <p:column headerText="ESTADO">
-                                <h:outputText value="#{re.activo?'ACTIVO':'INACTIVO'}"/>
-
+                                <h:outputText value="#{re.activo ? 'ACTIVO' : 'INACTIVO'}"/>
                             </p:column>
                             <btt:botonesTop bean="#{frmArea.frmEspacio}" refrescar=":tabDetalle:pnlDetalleEspacio @form"/>
                         </p:dataTable>
-
-
                     </h:form>
-
                     <h:panelGrid id="pnlDetalleEspacio">
                         <h:form id="frmDetalleEspacio" rendered="#{not empty frmArea.frmEspacio.regis}">
-                            <h:panelGrid columns="2">
-                                <h:outputLabel for="txtIdEspacio" value="ID"/>
+                            <p:panelGrid columns="2">
+                                <p:outputLabel for="txtIdEspacio" value="ID"/>
                                 <h:inputText id="txtIdEspacio" value="#{frmArea.frmEspacio.regis.idEspacio}"
                                              disabled="true" readonly="true"/>
                                 <p:outputLabel for="txtNombreEspacio" value="Nombre"/>
                                 <p:inputText id="txtNombreEspacio" value="#{frmArea.frmEspacio.regis.nombre}" size="70"/>
-
-                            </h:panelGrid>
-
+                            </p:panelGrid>
                             <btt:botonesButtom bean="#{frmArea.frmEspacio}"/>
-
                         </h:form>
-
                     </h:panelGrid>
-
-
                 </p:tab>
-
             </p:tabView>
-
         </h:panelGroup>
-
     </define>
-
 </composition>
