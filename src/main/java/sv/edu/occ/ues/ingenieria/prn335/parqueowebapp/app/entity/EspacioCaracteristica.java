@@ -25,6 +25,7 @@ import jakarta.persistence.Table;
 @Table(name = "espacio_caracteristica", catalog = "parqueo", schema = "public")
 @NamedQueries({
     @NamedQuery(name = "EspacioCaracteristica.findAll", query = "SELECT e FROM EspacioCaracteristica e")})
+
 public class EspacioCaracteristica implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -115,5 +116,5 @@ public class EspacioCaracteristica implements Serializable {
     public String toString() {
         return "sv.edu.occ.ues.ingenieria.prn335.mapeo.mapeo.EspacioCaracteristica[ idEspacioCaracteristica=" + idEspacioCaracteristica + " ]";
     }
-    
+
 }

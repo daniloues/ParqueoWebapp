@@ -169,6 +169,7 @@ public abstract class AbstractFrm<T> implements Serializable {
             this.estado = EstadosCRUD.NINGUNO;
             mensaje = new FacesMessage(FacesMessage.SEVERITY_INFO, "Registro guardado con exito", "Se creo el registro");
             getFacesContext().addMessage(null, mensaje);
+            this.regis = null;
             return;
 
         } catch (Exception ex) {
@@ -176,8 +177,6 @@ public abstract class AbstractFrm<T> implements Serializable {
         }
         mensaje = new FacesMessage(FacesMessage.SEVERITY_ERROR, "No se pudo guardar el registro", "no se creo el registro");
         getFacesContext().addMessage(null, mensaje);
-
-        this.regis = null;
 
     }
 

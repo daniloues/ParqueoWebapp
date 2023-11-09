@@ -6,6 +6,7 @@ package sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.boundary.rest;
 
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.DefaultValue;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
@@ -102,6 +103,83 @@ public class TipoEspacioResource {
         return Response.status(422).
                 header("missing-parameter", "id")
                 .build();
+    }
+
+    @DELETE
+    @Path("/{id}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response delete(@PathParam("id") Integer idTipoEspacio) {
+        if (idTipoEspacio != null) {
+            TipoEspacio registro = teBean.findById(idTipoEspacio);
+
+            if (registro != null) {
+                try {
+                    teBean.delete(registro);
+                    return Response.status(Response.Status.NO_CONTENT).build();
+                } catch (Exception ex) {
+                    Logger.getLogger(getClass().getName()).log(Level.SEVERE, ex.getMessage(), ex);
+                    return Response.status(500).header("delete-exception", registro.toString()).build();
+                }
+            } else {
+                return Response.status(Response.Status.NOT_FOUND)
+                        .header("not-found", "id")
+                        .build();
+            }
+        }
+
+        return Response.status(422)
+                .header("missing-parameter", "id")
+                .build();
+    }
+
+    @PUT
+    @Path("/{id}")
+    @Produces({MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
+    public Response update(@PathParam("id") Integer idTipoEspacio, TipoEspacio registroActualizado) {
+        if (idTipoEspacio != null && registroActualizado != null) {
+            TipoEspacio registroExistente = teBean.findById(idTipoEspacio);
+
+            if (registroExistente != null) {
+                try {
+                    registroExistente.setNombre(registroActualizado.getNombre());
+                    TipoEspacio registroModificado = teBean.modify(registroExistente);
+                    return Response.status(Response.Status.OK)
+                            .entity(registroModificado)
+                            .build();
+                } catch (Exception ex) {
+                    Logger.getLogger(getClass().getName()).log(Level.SEVERE, ex.getMessage(), ex);
+                    return Response.status(500)
+                            .header("update-exception", registroActualizado.toString())
+                            .build();
+                }
+            } else {
+                return Response.status(Response.Status.NOT_FOUND)
+                        .header("not-found", "id")
+                        .build();
+            }
+        }
+
+        return Response.status(422)
+                .header("missing-parameter", "id o datos de actualización")
+                .build();
+    }
+
+    @GET
+    @Path("/count")
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response count() {
+        try {
+            int total = teBean.count();
+            return Response.status(Response.Status.OK)
+                    .entity(total)
+                    .build();
+        } catch (Exception ex) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, ex.getMessage(), ex);
+            return Response.status(500)
+                    .header("count-exception", ex.getMessage())
+                    .build();
+        }
     }
 
 }

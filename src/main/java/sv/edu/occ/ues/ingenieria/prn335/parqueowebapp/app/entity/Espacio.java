@@ -28,9 +28,12 @@ import jakarta.persistence.Table;
 @NamedQueries({
     @NamedQuery(name = "Espacio.findAll", query = "SELECT e FROM Espacio e"),
     @NamedQuery(name = "Espacio.findByIdArea", query = "SELECT e FROM Espacio e WHERE e.idArea.idArea= :idArea ORDER BY e.nombre ASC"),
-    @NamedQuery(name = "Espacio.countByIdArea", query = "SELECT COUNT(e.idEspacio) FROM Espacio e WHERE e.idArea.idArea= :idArea")
+    @NamedQuery(name = "Espacio.countByIdArea", query = "SELECT COUNT(e.idEspacio) FROM Espacio e WHERE e.idArea.idArea= :idArea"),
+    @NamedQuery(name = "Espacio.findByTipoEspacioAndValorCarro", query = "SELECT e FROM Espacio e JOIN e.espacioCaracteristicaList c JOIN c.idTipoEspacio te WHERE UPPER(te.nombre) LIKE '%TAMAÑO%' AND UPPER(c.valor) LIKE '%CARRO'")
 
 })
+
+//AGREGUE UN QUERY PARA BUSCAR QUE ESPACIOS TIENE COMO CARACTERISTICA QUE SEAN DE TAMANYO CARRO
 public class Espacio implements Serializable {
 
     private static final long serialVersionUID = 1L;

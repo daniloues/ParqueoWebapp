@@ -9,6 +9,7 @@ import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
+import jakarta.persistence.TypedQuery;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
@@ -58,5 +59,18 @@ public class EspacioBean extends AbstractDataAccess<Espacio> implements Serializ
         }
         return 0;
     }
+    //AGREGADO PARA PRUEBAS
+    public List<Espacio> findByTipoEspacioAndValorCarro(int primero, int tamanio) {
+    if (primero >= 0 && tamanio > 0) {
+        if (em != null) {
+            TypedQuery<Espacio> q = em.createNamedQuery("Espacio.findByTipoEspacioAndValorCarro", Espacio.class);
+            q.setFirstResult(primero);
+            q.setMaxResults(tamanio);
+            return q.getResultList();
+        }
+    }
+    return Collections.emptyList();
+}
+
 
 }
