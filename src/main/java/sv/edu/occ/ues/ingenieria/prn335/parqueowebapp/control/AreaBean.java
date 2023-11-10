@@ -23,7 +23,7 @@ import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.app.entity.Area;
 @LocalBean
 public class AreaBean extends AbstractDataAccess<Area> implements Serializable {
 
-    @PersistenceContext(unitName = "parqueoPU")
+    @PersistenceContext(unitName = "ParqueoPU")
     EntityManager em;
 
     @Override

@@ -4,7 +4,6 @@
  */
 package sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.app.entity;
 
-import jakarta.json.bind.annotation.JsonbTransient;
 import java.io.Serializable;
 import java.util.List;
 import jakarta.persistence.Basic;
@@ -18,7 +17,7 @@ import jakarta.persistence.Table;
 
 /**
  *
- * @author alexo
+ * @author pc
  */
 @Entity
 @Table(name = "tipo_espacio", catalog = "parqueo", schema = "public")
@@ -59,7 +58,6 @@ public class TipoEspacio implements Serializable {
         this.nombre = nombre;
     }
 
-    @JsonbTransient
     public List<EspacioCaracteristica> getEspacioCaracteristicaList() {
         return espacioCaracteristicaList;
     }
@@ -90,7 +88,7 @@ public class TipoEspacio implements Serializable {
 
     @Override
     public String toString() {
-        return "sv.edu.occ.ues.ingenieria.prn335.mapeo.mapeo.TipoEspacio[ idTipoEspacio=" + idTipoEspacio + " ]";
+        return "com.mycompany.mapeo1.TipoEspacio[ idTipoEspacio=" + idTipoEspacio + " ]";
     }
     
 }

@@ -24,7 +24,7 @@ import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.app.entity.Espacio;
 @LocalBean
 public class EspacioBean extends AbstractDataAccess<Espacio> implements Serializable {
 
-    @PersistenceContext(unitName = "parqueoPU")
+    @PersistenceContext(unitName = "ParqueoPU")
     EntityManager em;
 
     public EspacioBean() {

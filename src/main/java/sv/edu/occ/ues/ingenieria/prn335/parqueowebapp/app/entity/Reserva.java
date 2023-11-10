@@ -24,7 +24,7 @@ import jakarta.persistence.TemporalType;
 
 /**
  *
- * @author alexo
+ * @author pc
  */
 @Entity
 @Table(name = "reserva", catalog = "parqueo", schema = "public")
@@ -140,7 +140,7 @@ public class Reserva implements Serializable {
 
     @Override
     public String toString() {
-        return "sv.edu.occ.ues.ingenieria.prn335.mapeo.mapeo.Reserva[ idReserva=" + idReserva + " ]";
+        return "com.mycompany.mapeo1.Reserva[ idReserva=" + idReserva + " ]";
     }
     
 }

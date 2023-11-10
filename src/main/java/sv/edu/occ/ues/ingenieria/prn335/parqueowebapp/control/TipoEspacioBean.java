@@ -22,7 +22,7 @@ import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.app.entity.TipoEspacio;
 @LocalBean
 public class TipoEspacioBean extends AbstractDataAccess<TipoEspacio> implements Serializable {
 
-    @PersistenceContext(unitName = "parqueoPU")
+    @PersistenceContext(unitName = "ParqueoPU")
     EntityManager em;
 
     @Override

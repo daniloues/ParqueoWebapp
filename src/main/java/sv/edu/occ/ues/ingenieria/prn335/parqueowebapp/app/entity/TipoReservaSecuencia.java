@@ -21,7 +21,7 @@ import jakarta.persistence.Table;
 
 /**
  *
- * @author alexo
+ * @author pc
  */
 @Entity
 @Table(name = "tipo_reserva_secuencia", catalog = "parqueo", schema = "public")
@@ -135,7 +135,7 @@ public class TipoReservaSecuencia implements Serializable {
 
     @Override
     public String toString() {
-        return "sv.edu.occ.ues.ingenieria.prn335.mapeo.mapeo.TipoReservaSecuencia[ idTipoReservaSecuencia=" + idTipoReservaSecuencia + " ]";
+        return "com.mycompany.mapeo1.TipoReservaSecuencia[ idTipoReservaSecuencia=" + idTipoReservaSecuencia + " ]";
     }
     
 }

@@ -21,7 +21,7 @@ import jakarta.persistence.Table;
 
 /**
  *
- * @author alexo
+ * @author pc
  */
 @Entity
 @Table(name = "area", catalog = "parqueo", schema = "public")
@@ -128,7 +128,7 @@ public class Area implements Serializable {
 
     @Override
     public String toString() {
-        return "sv.edu.occ.ues.ingenieria.prn335.mapeo.mapeo.Area[ idArea=" + idArea + " ]";
+        return "com.mycompany.mapeo1.Area[ idArea=" + idArea + " ]";
     }
-
+    
 }

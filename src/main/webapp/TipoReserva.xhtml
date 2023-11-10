@@ -58,7 +58,7 @@
                                  readonly="true" disabled="true"/>
 
                     <p:outputLabel value="Nombre" for="txtNombre"/>
-                    <p:inputText id="txtNombre" value="#{frmTipoReserva.regis.nombre}" size="70"/>
+                    <p:inputText id="txtNombre" value="#{frmTipoReserva.regis.nombre}" size="70" required="true"/>
 
                     <p:outputLabel value="Publico" for="chkPublico"/>
                     <p:selectBooleanCheckbox id="chkPublico" value="#{frmTipoReserva.regis.publico}"/>
@@ -66,11 +66,8 @@
                     <p:outputLabel value="Descripcion" for="txtDescripcion"/>
                     <p:inputTextarea id="txtDescripcion" value="#{frmTipoReserva.regis.descripcion}" cols="70" rows="3"/>
 
-
                 </h:panelGrid>
-
                 <!-- Generalizacion de botones de guardar, eliminiar y modificar -->
-                
                 <btnparq:botonesButtom bean="#{frmTipoReserva}"/>
 
                 <p:messages/>

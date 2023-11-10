@@ -19,7 +19,7 @@ import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.app.entity.TipoReservaSecu
 @LocalBean
 public class TipoReservaSecuenciaBean extends AbstractDataAccess<TipoReservaSecuencia> implements Serializable {
 
-    @PersistenceContext(unitName = "parqueoPU")
+    @PersistenceContext(unitName = "ParqueoPU")
     EntityManager em;
 
     @Override
