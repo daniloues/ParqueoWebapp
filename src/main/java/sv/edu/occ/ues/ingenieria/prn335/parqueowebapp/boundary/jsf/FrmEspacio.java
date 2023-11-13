@@ -62,12 +62,12 @@ public class FrmEspacio extends AbstractFrm<Espacio> implements Serializable {
 
     @Override
     public void instanciarRegistro() {
-        this.regis = new Espacio();
+        this.registro = new Espacio();
         if (this.idArea != null) {
-            this.regis.setIdArea(new Area(idArea));
+            this.registro.setIdArea(new Area(idArea));
 
         }
-        this.regis.setActivo(true);
+        this.registro.setActivo(true);
 
     }
 

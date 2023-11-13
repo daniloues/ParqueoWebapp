@@ -130,5 +130,5 @@ public class Area implements Serializable {
     public String toString() {
         return "com.mycompany.mapeo1.Area[ idArea=" + idArea + " ]";
     }
-    
+
 }

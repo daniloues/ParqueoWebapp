@@ -69,7 +69,7 @@ public class FrmTipoReserva extends AbstractFrm<TipoReserva> implements Serializ
 
     @Override
     public void instanciarRegistro() {
-        this.regis=new TipoReserva();
+        this.registro=new TipoReserva();
 
     }
 

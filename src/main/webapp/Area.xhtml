@@ -25,16 +25,16 @@
 
     <define name="detalle">
         <h:panelGroup id="pnlDetalle">
-            <p:tabView id="tabDetalle" cache="false" dynamic="true" rendered="#{not empty frmArea.regis}">
+            <p:tabView id="tabDetalle" cache="false" dynamic="true" rendered="#{not empty frmArea.registro}">
                 <p:tab closable="false" title="Geralidades">
                     <h:form id="frmDetalle">
                         <h:panelGrid columns="2">
                             <h:outputLabel id="lblid" for="txtId" value="ID"/>
-                            <h:inputText id="txtId" value="#{frmArea.regis.idArea}" disabled="true" readonly="true"/>
+                            <h:inputText id="txtId" value="#{frmArea.registro.idArea}" disabled="true" readonly="true"/>
                             <p:outputLabel id="lblNombre" value="Nombre" for="txtNombre" />
-                            <p:inputText id="txtNombre" value="#{frmArea.regis.nombre}" size="75"/>
+                            <p:inputText id="txtNombre" value="#{frmArea.registro.nombre}" size="75"/>
                             <p:outputLabel id="lblDescripcion"  value="Descripcion" for="txtDescripcion"/>
-                            <p:inputTextarea id="txtDescripcion" value="#{frmArea.regis.descripcion}" cols="75" rows="3"/>
+                            <p:inputTextarea id="txtDescripcion" value="#{frmArea.registro.descripcion}" cols="75" rows="3"/>
                         </h:panelGrid>
                     </h:form>
 
@@ -50,8 +50,8 @@
                             rows="3"
                             first="0"
                             selectionMode="single"
-                            selection="#{frmArea.frmEspacio.regis}"
-                            rendered="#{empty frmArea.frmEspacio.regis}"
+                            selection="#{frmArea.frmEspacio.registro}"
+                            rendered="#{empty frmArea.frmEspacio.registro}"
                             >
 
                             <p:ajax process="@this" update=":tabDetalle:pnlDetalleEspacio @form" 
@@ -80,13 +80,13 @@
                     </h:form>
                     
                     <h:panelGrid id="pnlDetalleEspacio">
-                        <h:form id="frmDetalleEspacio" rendered="#{not empty frmArea.frmEspacio.regis}">
+                        <h:form id="frmDetalleEspacio" rendered="#{not empty frmArea.frmEspacio.registro}">
                             <h:panelGrid columns="2">
                                 <h:outputLabel for="txtIdEspacio" value="ID"/>
-                                <h:inputText id="txtIdEspacio" value="#{frmArea.frmEspacio.regis.idEspacio}"
+                                <h:inputText id="txtIdEspacio" value="#{frmArea.frmEspacio.registro.idEspacio}"
                                              disabled="true" readonly="true"/>
                                 <p:outputLabel for="txtNombreEspacio" value="Nombre"/>
-                                <p:inputText id="txtNombreEspacio" value="#{frmArea.frmEspacio.regis.nombre}" size="70"/>
+                                <p:inputText id="txtNombreEspacio" value="#{frmArea.frmEspacio.registro.nombre}" size="70"/>
                                 
                             </h:panelGrid>
                             

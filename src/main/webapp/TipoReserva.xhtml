@@ -16,8 +16,8 @@
                          rows="3"
                          first="0"
                          selectionMode="single"
-                         selection="#{frmTipoReserva.regis}"
-                         rendered="#{empty frmTipoReserva.regis}"
+                         selection="#{frmTipoReserva.registro}"
+                         rendered="#{empty frmTipoReserva.registro}"
 
                          >
 
@@ -50,21 +50,21 @@
 
     <define name="detalle">
         <h:panelGroup id="pnlDetalle">
-            <h:form rendered="#{not empty frmTipoReserva.regis}">
+            <h:form rendered="#{not empty frmTipoReserva.registro}">
 
                 <h:panelGrid columns="2">
                     <p:outputLabel value="ID" for="txtId"/>
-                    <p:inputText id="txtId" value="#{frmTipoReserva.regis.idTipoReserva}"
+                    <p:inputText id="txtId" value="#{frmTipoReserva.registro.idTipoReserva}"
                                  readonly="true" disabled="true"/>
 
                     <p:outputLabel value="Nombre" for="txtNombre"/>
-                    <p:inputText id="txtNombre" value="#{frmTipoReserva.regis.nombre}" size="70" required="true"/>
+                    <p:inputText id="txtNombre" value="#{frmTipoReserva.registro.nombre}" size="70" required="true"/>
 
                     <p:outputLabel value="Publico" for="chkPublico"/>
-                    <p:selectBooleanCheckbox id="chkPublico" value="#{frmTipoReserva.regis.publico}"/>
+                    <p:selectBooleanCheckbox id="chkPublico" value="#{frmTipoReserva.registro.publico}"/>
 
                     <p:outputLabel value="Descripcion" for="txtDescripcion"/>
-                    <p:inputTextarea id="txtDescripcion" value="#{frmTipoReserva.regis.descripcion}" cols="70" rows="3"/>
+                    <p:inputTextarea id="txtDescripcion" value="#{frmTipoReserva.registro.descripcion}" cols="70" rows="3"/>
 
                 </h:panelGrid>
                 <!-- Generalizacion de botones de guardar, eliminiar y modificar -->

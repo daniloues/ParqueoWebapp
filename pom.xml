@@ -41,19 +41,19 @@
             <version>5.6.0</version>
             <scope>test</scope>
         </dependency>
-         <dependency>
+        <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-junit-jupiter</artifactId>
             <version>5.1.1</version>
             <scope>test</scope>
         </dependency>
-             <dependency>
-                <groupId>org.primefaces</groupId>
-                <artifactId>primefaces</artifactId>
-                <version>13.0.0</version>
-                <classifier>jakarta</classifier>
-
-            </dependency>
+        <dependency>
+            <groupId>org.primefaces</groupId>
+            <artifactId>primefaces</artifactId>
+            <version>13.0.0</version>
+            <classifier>jakarta</classifier>
+            <scope>provided</scope>
+        </dependency>
         <dependency>
             <groupId>net.sf.jasperreports</groupId>
             <artifactId>jasperreports</artifactId>
@@ -81,7 +81,7 @@
                             <goal>report</goal>
                         </goals>
                     </execution>
-                     <execution>
+                    <execution>
                         <id>despues-de-unidad</id>
                         <phase>test</phase>
                         <goals>

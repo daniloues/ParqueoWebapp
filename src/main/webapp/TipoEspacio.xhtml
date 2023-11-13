@@ -17,8 +17,8 @@
                 rows="3"
                 first="0"
                 selectionMode="single"
-                selection="#{frmTipoEspacio.regis}"
-                rendered="#{empty frmTipoEspacio.regis}"
+                selection="#{frmTipoEspacio.registro}"
+                rendered="#{empty frmTipoEspacio.registro}"
 
                 >
 
@@ -45,15 +45,15 @@
 
     <define name="detalle">
         <h:panelGroup id="pnlDetalle">
-            <h:form rendered="#{not empty frmTipoEspacio.regis}">
+            <h:form rendered="#{not empty frmTipoEspacio.registro}">
 
                 <h:panelGrid columns="2">
                     <p:outputLabel value="ID" for="txtId"/>
-                    <p:inputText id="txtId" value="#{frmTipoEspacio.regis.idTipoEspacio}"
+                    <p:inputText id="txtId" value="#{frmTipoEspacio.registro.idTipoEspacio}"
                                  required="true"/>
 
                     <p:outputLabel value="Nombre" for="txtNombre"/>
-                    <p:inputText id="txtNombre" value="#{frmTipoEspacio.regis.nombre}" size="70" required="true"/>
+                    <p:inputText id="txtNombre" value="#{frmTipoEspacio.registro.nombre}" size="70" required="true"/>
 
 
                 </h:panelGrid>

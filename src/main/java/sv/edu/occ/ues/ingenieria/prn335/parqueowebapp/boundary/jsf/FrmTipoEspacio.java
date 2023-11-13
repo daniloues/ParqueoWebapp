@@ -59,7 +59,7 @@ public class FrmTipoEspacio extends AbstractFrm<TipoEspacio> implements Serializ
     @Override
     public void instanciarRegistro() {
 
-        this.regis = new TipoEspacio();
+        this.registro = new TipoEspacio();
     }
 
   

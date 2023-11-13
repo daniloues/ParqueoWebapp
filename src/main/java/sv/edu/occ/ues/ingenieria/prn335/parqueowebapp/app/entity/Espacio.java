@@ -140,5 +140,5 @@ public class Espacio implements Serializable {
     public String toString() {
         return "com.mycompany.mapeo1.Espacio[ idEspacio=" + idEspacio + " ]";
     }
-    
+
 }
