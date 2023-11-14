@@ -226,10 +226,16 @@ public class FrmReserva extends AbstractFrm<Reserva> implements Serializable {
         // Obtiene la fecha seleccionada
         Date fechaSeleccionada = (Date) value;
 
-        if (fechaSeleccionada != null && !this.registro.getDesde().after(fechaSeleccionada)) {
-            //System.out.print(fechaSeleccionada + "/" + this.registro.getDesde());
-            return true;
+        Date fechaAhora = new Date();
+
+        if (this.registro.getDesde().getTime() > fechaAhora.getTime()) {
+            if (fechaSeleccionada != null && !this.registro.getDesde().after(fechaSeleccionada)) {
+                //System.out.print(fechaSeleccionada + "/" + this.registro.getDesde());
+                return true;
+            }
         }
+        
+        fechaAhora.getTime();
         throw new ValidatorException(new FacesMessage("La fecha debe ser posterior a la fecha actual"));
     }
 
@@ -259,5 +265,9 @@ public class FrmReserva extends AbstractFrm<Reserva> implements Serializable {
             return this.modelo.getWrappedData().stream().filter(r -> r.getIdReserva().toString().equals(id)).collect(Collectors.toList()).get(0);
         }
         return null;
+    }
+
+    public void refinarBusquedaNodo() {
+
     }
 }
