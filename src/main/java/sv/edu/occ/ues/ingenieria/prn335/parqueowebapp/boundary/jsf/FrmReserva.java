@@ -38,59 +38,39 @@ import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.control.TipoReservaBean;
 public class FrmReserva extends AbstractFrm<Reserva> implements Serializable {
 
     @Inject
-    FacesContext fc;
+    ReservaBean rbean;
     @Inject
-    ReservaBean rBean;
-    @Inject
-    EspacioBean eBean;
+    TipoReservaBean trbean;
     @Inject
     AreaBean aBean;
     @Inject
-    TipoReservaBean trBean;
+    EspacioBean eBean;
+    @Inject
+    FacesContext Fc;
     List<TipoReserva> listaTipoReserva;
+
     TreeNode raiz;
     TreeNode nodoSeleccionado;
 
     @Override
-    public AbstractDataAccess<Reserva> getDataAccess() {
-        return rBean;
-    }
-
-    @Override
-    public FacesContext getFacesContext() {
-        return fc;
-    }
-
-    @Override
-    public String getIdPorObjeto(Reserva object) {
-        if (object != null && object.getIdReserva() != null) {
-            return object.getIdReserva().toString();
-        }
-        return null;
-    }
-
-    @Override
-    public Reserva getObjetoPorId(String id) {
-        if (id != null && this.modelo != null && this.modelo.getWrappedData() != null) {
-            return this.modelo.getWrappedData().stream().filter(r -> r.getIdReserva().toString().equals(id)).findFirst().orElse(null);
-        }
-        return null;
-    }
-
-    @Override
     public void instanciarRegistro() {
         this.registro = new Reserva();
-        listaTipoReserva = trBean.FindRange(0, 1000000000);
+        listaTipoReserva = trbean.FindRange(0, 10000000);
     }
 
     public void generarArbol(TreeNode padre, Area actual) {
         DefaultTreeNode nuevoPadre = new DefaultTreeNode(actual, padre);
 
-        List<Area> hijos = this.aBean.findByIdPadre(actual.getIdArea(), 0, 100000000);
+        List<Area> hijos = this.aBean.findByIdPadre(actual.getIdArea(), 0, 1000000000);
         for (Area hijo : hijos) {
             generarArbol(nuevoPadre, hijo);
         }
 
+    }
+
+    @Override
+    public AbstractDataAccess<Reserva> getDataAccess() {
+        return rbean;
     }
 
     public List<TipoReserva> getListaTipoReserva() {
@@ -146,11 +126,42 @@ public class FrmReserva extends AbstractFrm<Reserva> implements Serializable {
     public void cambiarFechaDesde(AjaxBehaviorEvent event) {
         this.registro.setDesde((Date) ((UIOutput) event.getSource()).getValue());
         System.out.println(registro.getDesde());
-
     }
 
     public void validate(FacesContext context, UIComponent component, Object value) {
-        //
+        // Obtén el valor del p:calendar
+        Date fechaHasta = (Date) value;
+
+        // Accede a la fecha desde el bean
+        Date fechaDesde = registro.getDesde();
+
+        // Realiza la validación
+        if (fechaHasta != null && fechaDesde != null && fechaHasta.before(fechaDesde)) {
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    "La fecha no validas La fecha No pued ser menor que la inicial", null);
+            throw new ValidatorException(message);
+
+        }
     }
 
+    @Override
+    public FacesContext getFacesContext() {
+        return Fc;
+    }
+
+    @Override
+    public String getIdPorObjeto(Reserva object) {
+        if (object != null && object.getIdReserva() != null) {
+            return object.getIdReserva().toString();
+        }
+        return null;
+    }
+
+    @Override
+    public Reserva getObjetoPorId(String id) {
+        if (id != null && this.modelo != null && this.modelo.getWrappedData() != null) {
+            return this.modelo.getWrappedData().stream().filter(r -> r.getIdReserva().toString().equals(id)).collect(Collectors.toList()).get(0);
+        }
+        return null;
+    }
 }
