@@ -155,6 +155,35 @@ public class FrmReserva extends AbstractFrm<Reserva> implements Serializable {
     }
 
     public List<Espacio> getEspaciosDisponibles() {
+
+        if (espaciosDisponibles != null) {
+            Date desde = this.registro.getDesde();
+            Date hasta = this.registro.getHasta();
+            boolean activo = false;
+            List<Espacio> espacio1 = new ArrayList<>();
+            List<Espacio> espacios = espaciosDisponibles;
+            for (int i = 0; i < espacios.size(); i++) {
+                Espacio eP = espacios.get(i);
+                eP.getReservaList();
+
+                List<Reserva> reserva = eP.getReservaList();
+                for (int j = 0; j < reserva.size(); j++) {
+                    Reserva rs = reserva.get(j);
+
+                    if (rs.getDesde().getTime() >= desde.getTime() && rs.getHasta().getTime() <= hasta.getTime()) {
+                        // throw new ValidatorException(new FacesMessage("La fecha ya esta reservada"));
+                        activo = false;
+                        break;
+                    }
+                    activo = true;
+                }
+                if (activo == true) {
+                    espacio1.add(eP);
+                }
+            }
+            espaciosDisponibles = espacio1;
+        }
+
         return espaciosDisponibles;
     }
 
@@ -234,7 +263,7 @@ public class FrmReserva extends AbstractFrm<Reserva> implements Serializable {
                 return true;
             }
         }
-        
+
         fechaAhora.getTime();
         throw new ValidatorException(new FacesMessage("La fecha debe ser posterior a la fecha actual"));
     }

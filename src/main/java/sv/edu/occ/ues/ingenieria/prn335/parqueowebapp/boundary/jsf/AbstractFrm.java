@@ -180,6 +180,8 @@ public abstract class AbstractFrm<T> implements Serializable {
 
     }
 
+    
+        
     public T getRegistro() {
         return registro;
     }
