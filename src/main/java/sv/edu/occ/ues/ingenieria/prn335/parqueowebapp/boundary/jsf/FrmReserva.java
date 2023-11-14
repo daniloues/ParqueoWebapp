@@ -4,29 +4,38 @@
  */
 package sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.boundary.jsf;
 
+import jakarta.annotation.PostConstruct;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.component.UIComponent;
 import jakarta.faces.component.UIOutput;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.event.AjaxBehaviorEvent;
+import jakarta.faces.model.SelectItem;
 import jakarta.faces.validator.ValidatorException;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.primefaces.event.NodeSelectEvent;
 import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.TreeNode;
-import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.app.entity.Area;
 import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.app.entity.Espacio;
 import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.app.entity.Reserva;
 import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.app.entity.TipoReserva;
 import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.control.AbstractDataAccess;
 import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.control.AreaBean;
+import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.app.entity.Area;
+import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.app.entity.TipoEspacio;
+
 import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.control.EspacioBean;
 import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.control.ReservaBean;
+import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.control.TipoEspacioBean;
 import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.control.TipoReservaBean;
 
 /**
@@ -46,16 +55,43 @@ public class FrmReserva extends AbstractFrm<Reserva> implements Serializable {
     @Inject
     EspacioBean eBean;
     @Inject
+    TipoEspacioBean teBean;
+    @Inject
     FacesContext Fc;
+    @Inject
+    FrmEspacio frmEspacio;
     List<TipoReserva> listaTipoReserva;
+
+    Area areaE;
 
     TreeNode raiz;
     TreeNode nodoSeleccionado;
+    List<Espacio> espaciosDisponibles;
+    List<TipoEspacio> caractaristicasDisponibles;
+    List<TipoEspacio> caracteristicasSeleccionadas;
+    List<SelectItem> caracteristicasDisponiblesAsItems;
 
     @Override
     public void instanciarRegistro() {
         this.registro = new Reserva();
         listaTipoReserva = trbean.FindRange(0, 10000000);
+    }
+
+    @PostConstruct
+    @Override
+    public void inicializar() {
+        super.inicializar();
+        this.raiz = new DefaultTreeNode("Areas", null);
+        List<Area> lista = aBean.findByIdPadre(null, 0, 100000000);
+        if (lista != null && !lista.isEmpty()) {
+
+            for (Area next : lista) {
+                if (next.getIdAreaPadre() == null) {
+                    this.generarArbol(raiz, next);
+                }
+
+            }
+        }
     }
 
     public void generarArbol(TreeNode padre, Area actual) {
@@ -65,6 +101,27 @@ public class FrmReserva extends AbstractFrm<Reserva> implements Serializable {
         for (Area hijo : hijos) {
             generarArbol(nuevoPadre, hijo);
         }
+    }
+
+    public void seleccionarNodoListener(NodeSelectEvent nse) {
+        Area area = (Area) nse.getTreeNode().getData();
+        this.seleccionarRegistro();
+        System.out.println("selecionaste " + (Area) nse.getTreeNode().getData());
+        if (this.areaE != null && this.areaE.getIdArea() != null && this.frmEspacio != null) {
+            this.frmEspacio.setIdArea(areaE.getIdArea());
+        }
+
+        espaciosDisponibles = eBean.findByIdArea(area.getIdArea(), 0, 10000);
+        caractaristicasDisponibles = teBean.findRangeSlow(0, 100000);
+
+        // Lista de objetos SelectItem que representan las opciones disponibles
+        List<SelectItem> items = new ArrayList<>();
+
+        for (TipoEspacio caracteristica : caractaristicasDisponibles) {
+            items.add(new SelectItem(caracteristica, caracteristica.getNombre()));
+        }
+
+        setCaracteristicasDisponiblesAsItems(items);
 
     }
 
@@ -97,30 +154,52 @@ public class FrmReserva extends AbstractFrm<Reserva> implements Serializable {
         this.nodoSeleccionado = nodoSeleccionado;
     }
 
-    public String generarPathArea(Long id) {
+    public List<Espacio> getEspaciosDisponibles() {
+        return espaciosDisponibles;
+    }
 
-        String txtSalida = "Espacio: ";
+    public void setEspaciosDisponibles(List<Espacio> espaciosDisponibles) {
+        this.espaciosDisponibles = espaciosDisponibles;
+    }
 
-        Espacio espacioTabla = eBean.findById(id);
-        txtSalida = txtSalida + espacioTabla.getNombre();
+    public List<TipoEspacio> getCaractaristicasDisponibles() {
+        return caractaristicasDisponibles;
+    }
 
-        Area espacioArea = aBean.findById(espacioTabla.getIdArea().getIdArea());
-        txtSalida = txtSalida + ", Area: ";
-        txtSalida = txtSalida + espacioArea.getNombre();
+    public void setCaractaristicasDisponibles(List<TipoEspacio> caractaristicasDisponibles) {
+        this.caractaristicasDisponibles = caractaristicasDisponibles;
+    }
 
-        boolean signal = true;
-        do {
-            if (espacioArea.getIdAreaPadre() != null) {
-                espacioArea = aBean.findById(espacioArea.getIdAreaPadre().getIdArea());
-                txtSalida = txtSalida + "/";
-                txtSalida = txtSalida + espacioArea.getNombre();
-            } else {
-                signal = false;
+    public List<TipoEspacio> getCaracteristicasSeleccionadas() {
+        return caracteristicasSeleccionadas;
+    }
+
+    public void setCaracteristicasSeleccionadas(List<TipoEspacio> caracteristicasSeleccionadas) {
+        this.caracteristicasSeleccionadas = caracteristicasSeleccionadas;
+    }
+
+    public List<SelectItem> getCaracteristicasDisponiblesAsItems() {
+        return caracteristicasDisponiblesAsItems;
+    }
+
+    public void setCaracteristicasDisponiblesAsItems(List<SelectItem> caracteristicasDisponiblesAsItems) {
+        this.caracteristicasDisponiblesAsItems = caracteristicasDisponiblesAsItems;
+    }
+
+    public String generarPathArea(long idEspacio) {
+
+        Espacio espacio = eBean.findById(idEspacio);
+
+        if (espacio != null) {
+            Area areaPadre = espacio.getIdArea().getIdAreaPadre();
+            Area area = espacio.getIdArea();
+            if (areaPadre != null) {
+                return "Espacio: " + espacio.getNombre() + " Areas:" + areaPadre.getNombre() + "/" + area.getNombre();
+            } else if (area != null) {
+                return "Espacio: " + espacio.getNombre() + " Areas: " + area.getNombre();
             }
-
-        } while (signal);
-
-        return txtSalida;
+        }
+        return "";
     }
 
     public void cambiarFechaDesde(AjaxBehaviorEvent event) {
@@ -128,20 +207,37 @@ public class FrmReserva extends AbstractFrm<Reserva> implements Serializable {
         System.out.println(registro.getDesde());
     }
 
-    public void validate(FacesContext context, UIComponent component, Object value) {
-        // Obtén el valor del p:calendar
-        Date fechaHasta = (Date) value;
+    private boolean espacioDesbloqueado;
 
-        // Accede a la fecha desde el bean
-        Date fechaDesde = registro.getDesde();
+    public boolean isEspacioDesbloqueado() {
+        return espacioDesbloqueado;
+    }
 
-        // Realiza la validación
-        if (fechaHasta != null && fechaDesde != null && fechaHasta.before(fechaDesde)) {
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                    "La fecha no validas La fecha No pued ser menor que la inicial", null);
-            throw new ValidatorException(message);
+    public void setEspacioDesbloqueado(boolean espacioDesbloqueado) {
+        this.espacioDesbloqueado = espacioDesbloqueado;
+    }
 
+    public void desbloquearEspacio() {
+        espacioDesbloqueado = true;
+    }
+
+    // ... (otros métodos)
+    public boolean validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
+        // Obtiene la fecha seleccionada
+        Date fechaSeleccionada = (Date) value;
+
+        if (fechaSeleccionada != null && !this.registro.getDesde().after(fechaSeleccionada)) {
+            //System.out.print(fechaSeleccionada + "/" + this.registro.getDesde());
+            return true;
         }
+        throw new ValidatorException(new FacesMessage("La fecha debe ser posterior a la fecha actual"));
+    }
+
+// Agregar el siguiente atributo y método
+    private boolean fechaValida;
+
+    public boolean isFechaValida() {
+        return fechaValida;
     }
 
     @Override

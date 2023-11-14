@@ -13,14 +13,14 @@
             type="sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.boundary.jsf.AbstractFrm"
             required="true"
             shortDescription="El bean que implementa funcionalidades CRUD."
-        />
+            />
         <cc:attribute
             name="refrescar"
             type="java.lang.String"
             required="false"
             default=":pnlDetalle @form"
             shortDescription="Componentes a actualizar después de realizar una acción en el formulario."
-        />
+            />
     </cc:interface>
 
     <!-- IMPLEMENTATION -->
@@ -31,7 +31,7 @@
                              actionListener="#{cc.attrs.bean.btnNuevoHandler}"
                              update="#{cc.attrs.refrescar}"/>
 
-            <p:commandButton value="#{trad.frm_cancel}"
+            <p:commandButton value="Cancelar"
                              style="padding: 1px;"
                              update="#{cc.attrs.refrescar}"
                              actionListener="#{cc.attrs.bean.btnCancelarHandler}"
