@@ -18,24 +18,20 @@ import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.control.EspacioBean;
  *
  * @author pc
  */
-@FacesConverter(managed = true, value = "espacioConverter")
-@RequestScoped
-public class EspacioConverter implements Converter<Espacio>, Serializable {
+@FacesConverter("espacioConverter")
+public class EspacioConverter implements Converter<Espacio> {
 
     @Inject
-    EspacioBean EspacioBean;
-
-    Espacio Espacio;
+    EspacioBean espacioBean;
 
     @Override
     public Espacio getAsObject(FacesContext context, UIComponent component, String value) {
-         if (value != null && value.trim().length() > 0) {
+        if (value != null && !value.isEmpty()) {
             try {
                 Long id = Long.parseLong(value);
-                Espacio = EspacioBean.findById(id);
-                return Espacio;
-            } catch (Exception e) {
-                
+                return espacioBean.findById(id);
+            } catch (NumberFormatException e) {
+                // Log the exception or handle it as needed
             }
         }
         return null;
@@ -43,11 +39,9 @@ public class EspacioConverter implements Converter<Espacio>, Serializable {
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Espacio value) {
-        if (value != null) {
-            return String.valueOf(((Espacio) value).getIdEspacio());
-        } else {
-            return null;
+        if (value != null && value.getIdEspacio() != null) {
+            return value.getIdEspacio().toString();
         }
+        return null;
     }
-
 }

@@ -28,8 +28,8 @@ import jakarta.persistence.Table;
 @NamedQueries({
     @NamedQuery(name = "Espacio.findAll", query = "SELECT e FROM Espacio e"),
     @NamedQuery(name = "Espacio.findByIdArea", query = "SELECT e FROM Espacio e WHERE e.idArea.idArea= :idArea ORDER BY e.nombre ASC"),
-    @NamedQuery(name = "Espacio.countByIdArea", query = "SELECT COUNT(e.idEspacio) FROM Espacio e WHERE e.idArea.idArea= :idArea")
-
+    @NamedQuery(name = "Espacio.countByIdArea", query = "SELECT COUNT(e.idEspacio) FROM Espacio e WHERE e.idArea.idArea= :idArea"),
+    @NamedQuery(name = "Espacio.findByCaracteristica", query = "SELECT e FROM Espacio e JOIN e.espacioCaracteristicaList ec JOIN ec.idTipoEspacio t WHERE e.activo = true AND t.nombre = 'Techado'")
 })
 public class Espacio implements Serializable {
 

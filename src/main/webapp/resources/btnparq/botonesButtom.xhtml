@@ -13,13 +13,13 @@
             type="sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.boundary.jsf.AbstractFrm"
             required="true"
             shortDescription="Nombre del backing bean que implementa las funcionalidades para el CRUD"
-        />
+            />
         <cc:attribute
             name="refrescar"
             type="java.lang.String"
             required="false"
             default=":pnlDetalle @form"
-        />
+            />
     </cc:interface>
 
     <!-- IMPLEMENTATION -->
@@ -27,17 +27,17 @@
         <h:panelGrid columns="3">
             <p:commandButton value="Guardar" 
                              actionListener="#{cc.attrs.bean.btnGuardarHandler}"
-                             update="@form :pnlDetalle :frmTabla"
+                             update=":frmTabla :pnlDetalle"
                              rendered="#{cc.attrs.bean.estado == 'NUEVO'}"/>
 
             <p:commandButton value="Modificar" 
                              actionListener="#{cc.attrs.bean.btnModificarHandler}"
-                             update="@form :pnlDetalle :frmTabla"
+                             update=":frmTabla :pnlDetalle"
                              rendered="#{cc.attrs.bean.estado == 'MODIFICAR'}"/>
 
             <p:commandButton value="Eliminar" 
                              actionListener="#{cc.attrs.bean.btnEliminarHandler}"
-                             update="@form :pnlDetalle :frmTabla"
+                             update=":frmTabla :pnlDetalle"
                              rendered="#{cc.attrs.bean.estado == 'MODIFICAR'}"/>
         </h:panelGrid>
     </cc:implementation>

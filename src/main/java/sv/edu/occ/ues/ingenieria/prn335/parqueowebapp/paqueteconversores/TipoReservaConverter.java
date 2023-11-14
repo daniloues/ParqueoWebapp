@@ -4,13 +4,15 @@
  */
 package sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.paqueteconversores;
 
-import jakarta.enterprise.context.RequestScoped;
+import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.boundary.jsf.*;
 import jakarta.faces.component.UIComponent;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.convert.Converter;
 import jakarta.faces.convert.FacesConverter;
 import jakarta.inject.Inject;
-import java.io.Serializable;
+import jakarta.inject.Named;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.Persistence;
 import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.app.entity.TipoReserva;
 import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.control.TipoReservaBean;
 
@@ -18,18 +20,22 @@ import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.control.TipoReservaBean;
  *
  * @author pc
  */
-@FacesConverter(managed = true, value = "tipoReservaConverter")
-@RequestScoped
-public class TipoReservaConverter implements Converter<TipoReserva>, Serializable {
+@Named
+@FacesConverter("tipoReservaConverter")
+public class TipoReservaConverter implements Converter<TipoReserva> {
 
     @Inject
-    TipoReservaBean tipoRervaBean;
+    private TipoReservaBean tipoReservaBean;
 
     @Override
     public TipoReserva getAsObject(FacesContext context, UIComponent component, String value) {
-        if (value != null) {
-            TipoReserva salida = tipoRervaBean.findById(Integer.valueOf(value));
-            return salida;
+        if (value != null && !value.isEmpty()) {
+            try {
+                Integer id = Integer.parseInt(value);
+                return tipoReservaBean.findById(id);
+            } catch (NumberFormatException e) {
+                // Handle conversion error
+            }
         }
         return null;
     }

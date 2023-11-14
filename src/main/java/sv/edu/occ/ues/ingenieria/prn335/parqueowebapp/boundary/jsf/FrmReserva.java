@@ -10,8 +10,12 @@ import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import java.io.Serializable;
 import java.util.stream.Collectors;
+import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.app.entity.Area;
+import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.app.entity.Espacio;
 import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.app.entity.Reserva;
 import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.control.AbstractDataAccess;
+import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.control.AreaBean;
+import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.control.EspacioBean;
 import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.control.ReservaBean;
 
 /**
@@ -26,6 +30,11 @@ public class FrmReserva extends AbstractFrm<Reserva> implements Serializable {
     FacesContext fc;
     @Inject
     ReservaBean rBean;
+
+    @Inject
+    EspacioBean eBean;
+    @Inject
+    AreaBean aBean;
 
     @Override
     public AbstractDataAccess<Reserva> getDataAccess() {
@@ -48,15 +57,40 @@ public class FrmReserva extends AbstractFrm<Reserva> implements Serializable {
     @Override
     public Reserva getObjetoPorId(String id) {
         if (id != null && this.modelo != null && this.modelo.getWrappedData() != null) {
-            return this.modelo.getWrappedData().stream().filter(r -> r.getIdEspacio().toString().equals(id)).collect(Collectors.toList()).get(0);
-
+            return this.modelo.getWrappedData().stream().filter(r -> r.getIdReserva().toString().equals(id)).findFirst().orElse(null);
         }
         return null;
     }
 
     @Override
     public void instanciarRegistro() {
+        this.registro = new Reserva();
 
     }
 
+    public String generarPathArea(Long id) {
+
+        String txtSalida = "Espacio: ";
+
+        Espacio espacioTabla = eBean.findById(id);
+        txtSalida = txtSalida + espacioTabla.getNombre();
+
+        Area espacioArea = aBean.findById(espacioTabla.getIdArea().getIdArea());
+        txtSalida = txtSalida + ", Area: ";
+        txtSalida = txtSalida + espacioArea.getNombre();
+
+        boolean signal = true;
+        do {
+            if (espacioArea.getIdAreaPadre() != null) {
+                espacioArea = aBean.findById(espacioArea.getIdAreaPadre().getIdArea());
+                txtSalida = txtSalida + "/";
+                txtSalida = txtSalida + espacioArea.getNombre();
+            } else {
+                signal = false;
+            }
+
+        } while (signal);
+
+        return txtSalida;
+    }
 }

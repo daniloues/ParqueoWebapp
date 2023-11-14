@@ -7,7 +7,9 @@ package sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.control;
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.Query;
 import java.io.Serializable;
 import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.app.entity.Reserva;
 
@@ -30,5 +32,7 @@ public class ReservaBean extends AbstractDataAccess<Reserva> implements Serializ
     public ReservaBean() {
         super(Reserva.class);
     }
+
+
 
 }
