@@ -29,7 +29,13 @@ import jakarta.persistence.TemporalType;
 @Entity
 @Table(name = "reserva", catalog = "parqueo", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "Reserva.findAll", query = "SELECT r FROM Reserva r")})
+    @NamedQuery(name = "Reserva.findAll", query = "SELECT r FROM Reserva r"),
+//    @NamedQuery(name = "Reserva.findByIdReserva", query = "SELECT r FROM Reserva r WHERE f.idReserva = :idReserva"),
+//    @NamedQuery(name = "Reserva.findByDesde", query = "SELECT r FROM Reserva r WHERE f.desde = :desde"),
+//    @NamedQuery(name = "Reserva.findByHasta", query = "SELECT r FROM Reserva r WHERE f.hasta = :hasta"),
+//    @NamedQuery(name = "Reserva.findByObservaciones", query = "SELECT r FROM Reserva r WHERE f.observaciones = :observaciones")
+
+})
 public class Reserva implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -142,5 +148,5 @@ public class Reserva implements Serializable {
     public String toString() {
         return "com.mycompany.mapeo1.Reserva[ idReserva=" + idReserva + " ]";
     }
-    
+
 }
