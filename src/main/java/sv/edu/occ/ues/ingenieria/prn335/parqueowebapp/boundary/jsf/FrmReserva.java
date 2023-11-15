@@ -256,18 +256,16 @@ public class FrmReserva extends AbstractFrm<Reserva> implements Serializable {
     public boolean validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
         // Obtiene la fecha seleccionada
         Date fechaSeleccionada = (Date) value;
+
         Date fechaAhora = new Date();
 
         if (this.registro.getDesde().getTime() > fechaAhora.getTime()) {
-
-            if (fechaSeleccionada != null && !this.registro.getDesde().after(fechaSeleccionada)) {
-                //System.out.print(fechaSeleccionada + "/" + this.registro.getDesde());
-                return true;
-
+            if (fechaSeleccionada != null) {
+                if (this.registro.getDesde().getTime() < fechaSeleccionada.getTime()) {
+                    return true;
+                }
             }
-
         }
-        fechaAhora.getTime();
         throw new ValidatorException(new FacesMessage("La fecha debe ser posterior a la fecha actual"));
     }
 

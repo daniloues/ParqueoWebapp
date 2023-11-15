@@ -33,14 +33,14 @@ public class FrmReservaHistorial extends AbstractFrm<ReservaHistorial> implement
     FacesContext fc;
     @Inject
     ReservaHistorialBean rhBean;
-    
+
     @Inject
     FrmTipoReservaSecuencia frmTipoReservaSecuencia;
 
     TreeNode raiz;
     TreeNode nodoSeleccionado;
     Long idTipoReservaSecuencia;
-    
+
     @PostConstruct
     @Override
     public void inicializar() {
@@ -50,18 +50,18 @@ public class FrmReservaHistorial extends AbstractFrm<ReservaHistorial> implement
         if (lista != null && !lista.isEmpty()) {
 
             for (ReservaHistorial next : lista) {
-                if (next.getIdTipoReservaSecuencia()== null) {
+                if (next.getIdTipoReservaSecuencia() == null) {
                     this.generarArbol(raiz, next);
                 }
 
             }
         }
     }
-    
+
     public void generarArbol(TreeNode padre, ReservaHistorial actual) {
         DefaultTreeNode nuevoPadre = new DefaultTreeNode(actual, padre);
 
-        List<ReservaHistorial> hijos = this.rhBean.findByIdTipoReservaSecuencia(idTipoReservaSecuencia, 0, 1000000);
+        List<ReservaHistorial> hijos = this.rhBean.findByIdTipoReservaSecuencia(actual.getIdReservaHistorial(), 0, 1000000);
         for (ReservaHistorial hijo : hijos) {
             generarArbol(nuevoPadre, hijo);
         }
