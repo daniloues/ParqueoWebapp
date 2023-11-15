@@ -35,7 +35,8 @@ public class FrmTipoReserva extends AbstractFrm<TipoReserva> implements Serializ
 
     @Inject
     TipoReservaBean trBean;
-
+    @Inject
+    FrmTipoReservaSecuencia trsBean;
     @Inject
     FacesContext fc;
 
@@ -69,10 +70,16 @@ public class FrmTipoReserva extends AbstractFrm<TipoReserva> implements Serializ
 
     @Override
     public void instanciarRegistro() {
-        this.registro=new TipoReserva();
+        this.registro = new TipoReserva();
 
     }
 
-    
+    public FrmTipoReservaSecuencia getTrsBean() {
+        return trsBean;
+    }
+
+    public void setTrsBean(FrmTipoReservaSecuencia trsBean) {
+        this.trsBean = trsBean;
+    }
 
 }

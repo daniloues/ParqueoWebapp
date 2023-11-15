@@ -26,7 +26,12 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "tipo_reserva_secuencia", catalog = "parqueo", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "TipoReservaSecuencia.findAll", query = "SELECT t FROM TipoReservaSecuencia t")})
+    @NamedQuery(name = "TipoReservaSecuencia.findAll", query = "SELECT t FROM TipoReservaSecuencia t"),
+    @NamedQuery(name = "TipoReservaSecuencia.findByIdTipoReservaSecuenciaPadre", query = "SELECT tps FROM TipoReservaSecuencia tps WHERE tps.idTipoReservaSecuenciaPadre.idTipoReservaSecuencia = :IdTipoReservaSecuenciaPadre ORDER BY tps.nombre ASC"),
+    @NamedQuery(name = "TipoReservaSecuencia.findRaices", query = "SELECT tps FROM TipoReservaSecuencia tps WHERE tps.idTipoReservaSecuenciaPadre IS NULL ORDER BY tps.nombre ASC"),
+    @NamedQuery(name = "TipoReservaSecuencia.countByIdPadre", query = "SELECT COUNT(trs.idTipoReservaSecuencia) FROM TipoReservaSecuencia trs WHERE trs.idTipoReservaSecuenciaPadre.idTipoReservaSecuencia = :IdTipoReservaSecuenciaPadre")
+
+})
 public class TipoReservaSecuencia implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -137,5 +142,5 @@ public class TipoReservaSecuencia implements Serializable {
     public String toString() {
         return "com.mycompany.mapeo1.TipoReservaSecuencia[ idTipoReservaSecuencia=" + idTipoReservaSecuencia + " ]";
     }
-    
+
 }

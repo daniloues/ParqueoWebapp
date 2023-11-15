@@ -31,6 +31,7 @@ import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.app.entity.TipoReserva;
 import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.control.AbstractDataAccess;
 import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.control.AreaBean;
 import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.app.entity.Area;
+import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.app.entity.EspacioCaracteristica;
 import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.app.entity.TipoEspacio;
 
 import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.control.EspacioBean;
@@ -56,6 +57,8 @@ public class FrmReserva extends AbstractFrm<Reserva> implements Serializable {
     EspacioBean eBean;
     @Inject
     TipoEspacioBean teBean;
+    @Inject
+    FrmReservaHistorial frmReservaHistorial;
     @Inject
     FacesContext Fc;
     @Inject
@@ -105,24 +108,51 @@ public class FrmReserva extends AbstractFrm<Reserva> implements Serializable {
 
     public void seleccionarNodoListener(NodeSelectEvent nse) {
         Area area = (Area) nse.getTreeNode().getData();
-        this.seleccionarRegistro();
-        System.out.println("selecionaste " + (Area) nse.getTreeNode().getData());
         if (this.areaE != null && this.areaE.getIdArea() != null && this.frmEspacio != null) {
             this.frmEspacio.setIdArea(areaE.getIdArea());
         }
-
         espaciosDisponibles = eBean.findByIdArea(area.getIdArea(), 0, 10000);
         caractaristicasDisponibles = teBean.FindRange(0, 100000);
 
-        // Lista de objetos SelectItem que representan las opciones disponibles
+        rellenarEspaciosDisponibles();
         List<SelectItem> items = new ArrayList<>();
 
         for (TipoEspacio caracteristica : caractaristicasDisponibles) {
-            items.add(new SelectItem(caracteristica, caracteristica.getNombre()));
+            for (EspacioCaracteristica esC : caracteristica.getEspacioCaracteristicaList()) {
+                items.add(new SelectItem(caracteristica, caracteristica.getNombre() + ": " + esC.getValor()));
+            }
         }
 
         setCaracteristicasDisponiblesAsItems(items);
+        //rellenarEspaciosDisponibles();
+    }
 
+    private void rellenarEspaciosDisponibles() {
+
+        if (espaciosDisponibles != null) {
+            Date desde = this.registro.getDesde();
+            Date hasta = this.registro.getHasta();
+            List<Espacio> espacios = espaciosDisponibles;
+            List<Espacio> reservado = new ArrayList<>();
+            for (Espacio esp : espacios) {
+                List<Reserva> rslist = esp.getReservaList();
+                for (Reserva rs : rslist) {
+                    if (rs.getDesde().getTime() >= desde.getTime() && rs.getHasta().getTime() <= hasta.getTime()) {
+                        System.out.println("La fecha ya esta reservada para: " + esp.getNombre());
+                        if (!reservado.contains(esp)) {
+                            reservado.add(esp);
+                        }
+                    }
+                }
+            }
+
+            for (Espacio es : reservado) {
+                if (espaciosDisponibles.contains(es)) {
+                    espaciosDisponibles.remove(es);
+                }
+            }
+
+        }
     }
 
     @Override
@@ -155,35 +185,7 @@ public class FrmReserva extends AbstractFrm<Reserva> implements Serializable {
     }
 
     public List<Espacio> getEspaciosDisponibles() {
-
-        if (espaciosDisponibles != null) {
-            Date desde = this.registro.getDesde();
-            Date hasta = this.registro.getHasta();
-            boolean activo = false;
-            List<Espacio> espacio1 = new ArrayList<>();
-            List<Espacio> espacios = espaciosDisponibles;
-            for (int i = 0; i < espacios.size(); i++) {
-                Espacio eP = espacios.get(i);
-                eP.getReservaList();
-
-                List<Reserva> reserva = eP.getReservaList();
-                for (int j = 0; j < reserva.size(); j++) {
-                    Reserva rs = reserva.get(j);
-
-                    if (rs.getDesde().getTime() >= desde.getTime() && rs.getHasta().getTime() <= hasta.getTime()) {
-                        // throw new ValidatorException(new FacesMessage("La fecha ya esta reservada"));
-                        activo = false;
-                        break;
-                    }
-                    activo = true;
-                }
-                if (activo == true) {
-                    espacio1.add(eP);
-                }
-            }
-            espaciosDisponibles = espacio1;
-        }
-
+  
         return espaciosDisponibles;
     }
 
@@ -254,16 +256,17 @@ public class FrmReserva extends AbstractFrm<Reserva> implements Serializable {
     public boolean validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
         // Obtiene la fecha seleccionada
         Date fechaSeleccionada = (Date) value;
-
         Date fechaAhora = new Date();
 
         if (this.registro.getDesde().getTime() > fechaAhora.getTime()) {
+
             if (fechaSeleccionada != null && !this.registro.getDesde().after(fechaSeleccionada)) {
                 //System.out.print(fechaSeleccionada + "/" + this.registro.getDesde());
                 return true;
-            }
-        }
 
+            }
+
+        }
         fechaAhora.getTime();
         throw new ValidatorException(new FacesMessage("La fecha debe ser posterior a la fecha actual"));
     }

@@ -30,6 +30,8 @@ public class FrmEspacio extends AbstractFrm<Espacio> implements Serializable {
     FacesContext fc;
     @Inject
     EspacioBean eBean;
+    
+    
     Integer idArea;
 
     @Override

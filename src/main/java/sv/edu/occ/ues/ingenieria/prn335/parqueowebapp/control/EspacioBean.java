@@ -35,7 +35,7 @@ public class EspacioBean extends AbstractDataAccess<Espacio> implements Serializ
     public EntityManager getEntityManager() {
         return em;
     }
-    
+
     public List<Espacio> findByIdArea(final Integer idArea, int primero, int tamanio) {
         if (idArea != null && primero >= 0 && tamanio > 0) {
             if (em != null) {
@@ -45,7 +45,7 @@ public class EspacioBean extends AbstractDataAccess<Espacio> implements Serializ
                 q.setMaxResults(tamanio);
                 return q.getResultList();
 
-            }  
+            }
 
         }
         return Collections.EMPTY_LIST;
@@ -59,18 +59,33 @@ public class EspacioBean extends AbstractDataAccess<Espacio> implements Serializ
         }
         return 0;
     }
-    //AGREGADO PARA PRUEBAS
-    public List<Espacio> findByTipoEspacioAndValorCarro(int primero, int tamanio) {
-    if (primero >= 0 && tamanio > 0) {
-        if (em != null) {
-            TypedQuery<Espacio> q = em.createNamedQuery("Espacio.findByTipoEspacioAndValorCarro", Espacio.class);
+
+    public List<Area> findByIdPadre(final Integer idPadre, int primero, int tamanio) {
+        if (primero >= 0 && tamanio > 0 && em != null) {
+            Query q;
+            if (idPadre == null) {
+                q = em.createNamedQuery("Area.findRaices");
+            } else {
+                q = em.createNamedQuery("Area.findByIdPadre");
+                q.setParameter("idAreaPadre", idPadre);
+            }
             q.setFirstResult(primero);
             q.setMaxResults(tamanio);
             return q.getResultList();
         }
+        return Collections.EMPTY_LIST;
     }
-    return Collections.emptyList();
-}
-
+    //AGREGADO PARA PRUEBAS
+//    public List<Espacio> findByTipoEspacioAndValorCarro(int primero, int tamanio) {
+//    if (primero >= 0 && tamanio > 0) {
+//        if (em != null) {
+//            TypedQuery<Espacio> q = em.createNamedQuery("Espacio.findByTipoEspacioAndValorCarro", Espacio.class);
+//            q.setFirstResult(primero);
+//            q.setMaxResults(tamanio);
+//            return q.getResultList();
+//        }
+//    }
+//    return Collections.emptyList();
+//}
 
 }

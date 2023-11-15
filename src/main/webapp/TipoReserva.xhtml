@@ -6,7 +6,8 @@
              xmlns:h="http://xmlns.jcp.org/jsf/html"
              xmlns:f="http://xmlns.jcp.org/jsf/core"
              xmlns:p="http://primefaces.org/ui"
-             xmlns:btnparq="http://xmlns.jcp.org/jsf/composite/btnparq">
+
+             xmlns:btnparq="jakarta.faces.composite/btnparq">
 
     <define name="tabla">
         <h:form id="frmTabla" >
@@ -48,31 +49,65 @@
 
     </define>
 
+
     <define name="detalle">
         <h:panelGroup id="pnlDetalle">
-            <h:form rendered="#{not empty frmTipoReserva.registro}">
+            <p:tabView id="tabDetalle" cache="false" dynamic="true" rendered="#{not empty frmTipoReserva.registro}">
+                <p:tab closable="false" title="Generalidades">
+                    <h:form rendered="#{not empty frmTipoReserva.registro}">
 
-                <h:panelGrid columns="2">
-                    <p:outputLabel value="ID" for="txtId"/>
-                    <p:inputText id="txtId" value="#{frmTipoReserva.registro.idTipoReserva}"
-                                 readonly="true" disabled="true"/>
+                        <h:panelGrid columns="2">
+                            <p:outputLabel value="ID" for="txtId"/>
+                            <p:inputText id="txtId" value="#{frmTipoReserva.registro.idTipoReserva}"
+                                         readonly="true" disabled="true"/>
 
-                    <p:outputLabel value="Nombre" for="txtNombre"/>
-                    <p:inputText id="txtNombre" value="#{frmTipoReserva.registro.nombre}" size="70" required="true"/>
+                            <p:outputLabel value="Nombre" for="txtNombre"/>
+                            <p:inputText id="txtNombre" value="#{frmTipoReserva.registro.nombre}" size="70" required="true"/>
 
-                    <p:outputLabel value="Publico" for="chkPublico"/>
-                    <p:selectBooleanCheckbox id="chkPublico" value="#{frmTipoReserva.registro.publico}"/>
+                            <p:outputLabel value="Publico" for="chkPublico"/>
+                            <p:selectBooleanCheckbox id="chkPublico" value="#{frmTipoReserva.registro.publico}"/>
 
-                    <p:outputLabel value="Descripcion" for="txtDescripcion"/>
-                    <p:inputTextarea id="txtDescripcion" value="#{frmTipoReserva.registro.descripcion}" cols="70" rows="3"/>
+                            <p:outputLabel value="Descripcion" for="txtDescripcion"/>
+                            <p:inputTextarea id="txtDescripcion" value="#{frmTipoReserva.registro.descripcion}" cols="70" rows="3"/>
 
-                </h:panelGrid>
-                <!-- Generalizacion de botones de guardar, eliminiar y modificar -->
-                <btnparq:botonesBottom bean="#{frmTipoReserva}"/>
+                        </h:panelGrid>
+                        <!-- Generalizacion de botones de guardar, eliminiar y modificar -->
 
-                <p:messages/>
-            </h:form>
 
+                        <p:commandButton value="Guardar" 
+                                         actionListener="#{frmTipoReserva.btnGuardarHandler}"
+                                         update="@form :frmTabla"
+                                         rendered="#{frmTipoReserva.estado=='NUEVO'}"
+                                         />
+                        <p:commandButton value="Modificar" 
+                                         rendered="#{frmTipoReserva.estado=='MODIFICAR'}"
+                                         update=":pnlDetalle :frmTabla"
+                                         actionListener="#{frmTipoReserva.btnModificarHandler}"/>
+                        <p:commandButton value="Eliminar" 
+                                         rendered="#{frmTipoReserva.estado=='MODIFICAR'}"
+                                         update=":pnlDetalle :frmTabla"
+                                         actionListener="#{frmTipoReserva.btnEliminarHandler}"/>
+
+
+
+                        <p:messages/>
+                    </h:form>
+                </p:tab>
+
+                <p:tab closable="false" title="Secuencia" disabled="#{frmTipoReserva.estado!='MODIFICAR'}">
+                    <h:form>
+                        <p:tree value="#{frmTipoReservaSecuencia.raiz}" var="nodo" dynamic="true"
+                                selectionMode="single" selection="#{frmTipoReservaSecuencia.nodoSeleccionado}">
+                            <p:ajax event="select" update=":detallePanel @form" listener="#{frmTipoReservaSecuencia.seleccionarNodoListener}"/>
+                            <p:treeNode>
+                                <h:outputText value="#{nodo.nombre}"/>
+                            </p:treeNode>
+                        </p:tree>
+                        <btnparq:botonesTop id="btnTop" bean="#{frmTipoReservaSecuencia}" refrescar="@form :pnlDetalle"/>
+                    </h:form>
+
+                </p:tab>
+            </p:tabView>
         </h:panelGroup>
 
     </define>

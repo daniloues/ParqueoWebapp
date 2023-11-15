@@ -27,11 +27,11 @@ public abstract class AbstractFrm<T> implements Serializable {
 
     public abstract AbstractDataAccess<T> getDataAccess();
 
-    LazyDataModel<T> modelo;
+     LazyDataModel<T> modelo;
 
     EstadosCRUD estado = EstadosCRUD.NINGUNO;
 
-    T registro = null;
+     T registro = null;
 
     public abstract FacesContext getFacesContext();
 
@@ -178,8 +178,7 @@ public abstract class AbstractFrm<T> implements Serializable {
         getFacesContext().addMessage(null, mensaje);
 
     }
-
-    
+   
         
     public T getRegistro() {
         return registro;

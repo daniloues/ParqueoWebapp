@@ -11,6 +11,7 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
@@ -166,6 +167,28 @@ public abstract class AbstractDataAccess<T> implements Serializable {
         }
         throw new IllegalStateException();
 
+    }
+    
+    public Query generarConsultaBase (EntityManager em) {
+        CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+        cq.select(cq.from(tipoDato));
+        Query q = em.createQuery(cq);
+        return q;
+     }
+    
+    public List<T> findAll () throws IllegalStateException {
+        EntityManager em = null;
+        try {
+            em = this.getEntityManager();
+        } catch (Exception e) {
+            throw new IllegalStateException();
+        }
+        if (em != null) {
+            Query q = generarConsultaBase(em);
+            return q.getResultList();
+        } else {
+            return new ArrayList<>();
+        }
     }
 
 }
