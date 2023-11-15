@@ -94,7 +94,7 @@
                                                  rendered="#{not empty frmReserva.registro.hasta}" type="button" onclick="PF('dlgEspacio').show();"/>
                             </h:panelGrid>
                         </h:panelGrid>
-                        <btnparq:botonesButtom bean="#{frmReserva}" refrescar=":frmTabla :pnlDetalle"/>
+                        <btnparq:botonesBottom bean="#{frmReserva}" refrescar=":frmTabla :pnlDetalle"/>
                         <p:messages id="msgs" showDetail="true"/>
                     </h:form>
                 </p:tab>
@@ -128,7 +128,7 @@
                                         <h:outputLabel value="Actual"/>
                                         <h:outputText value="#{frmReserva.frmReservaHistorial.registro.activo?'SI':'NO'}"/>
                                     </h:panelGrid>
-                                    <btnparq:botonesButtom bean="#{frmReserva.frmReservaHistorial}" 
+                                    <btnparq:botonesBottom bean="#{frmReserva.frmReservaHistorial}" 
                                                            refrescar=":tabDetalle:pnlHistorialDetalle :tabDetalle:frmTree"/>
                                 </h:form>
                             </h:panelGrid>

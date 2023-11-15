@@ -112,7 +112,7 @@ public class FrmReserva extends AbstractFrm<Reserva> implements Serializable {
         }
 
         espaciosDisponibles = eBean.findByIdArea(area.getIdArea(), 0, 10000);
-        caractaristicasDisponibles = teBean.findRangeSlow(0, 100000);
+        caractaristicasDisponibles = teBean.FindRange(0, 100000);
 
         // Lista de objetos SelectItem que representan las opciones disponibles
         List<SelectItem> items = new ArrayList<>();

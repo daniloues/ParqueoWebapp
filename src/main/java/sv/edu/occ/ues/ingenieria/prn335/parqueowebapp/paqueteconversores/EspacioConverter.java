@@ -4,20 +4,15 @@
  */
 package sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.paqueteconversores;
 
-import jakarta.enterprise.context.RequestScoped;
 import jakarta.faces.component.UIComponent;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.convert.Converter;
 import jakarta.faces.convert.FacesConverter;
-import jakarta.inject.Inject;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Id;
-import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
-import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.app.entity.Espacio;
-import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.control.EspacioBean;
 
 /**
  *

@@ -140,7 +140,6 @@ public abstract class AbstractFrm<T> implements Serializable {
             this.estado = EstadosCRUD.NINGUNO;
             this.registro = null;
             return;
-
         }
         //TODO:notificar que no se cambio
     }
