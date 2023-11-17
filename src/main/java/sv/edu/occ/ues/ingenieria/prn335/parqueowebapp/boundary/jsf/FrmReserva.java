@@ -298,6 +298,7 @@ public class FrmReserva extends AbstractFrm<Reserva> implements Serializable {
     }
 
     public void refinarBusquedaNodo() {
-
+        
+        
     }
 }

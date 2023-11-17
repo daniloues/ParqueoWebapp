@@ -5,6 +5,7 @@
 package sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.boundary.jsf;
 
 import jakarta.annotation.PostConstruct;
+import jakarta.enterprise.context.Dependent;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
@@ -16,6 +17,7 @@ import org.primefaces.event.NodeSelectEvent;
 import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.TreeNode;
 import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.app.entity.Area;
+import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.app.entity.ReservaHistorial;
 import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.app.entity.TipoReservaSecuencia;
 import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.control.AbstractDataAccess;
 import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.control.TipoReservaSecuenciaBean;
@@ -25,20 +27,24 @@ import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.control.TipoReservaSecuenc
  * @author alexo
  */
 @Named
-@ViewScoped
+@Dependent
 public class FrmTipoReservaSecuencia extends AbstractFrm<TipoReservaSecuencia> implements Serializable {
 
     @Inject
-    TipoReservaSecuenciaBean trsBean;
-
-    @Inject
     FacesContext fc;
-    
     @Inject
-    FrmReservaHistorial frmReservaHistorial;
+    TipoReservaSecuenciaBean trsBean;
+    
+    Long idReservaHistorial;
 
-    TreeNode raiz;
-    TreeNode nodoSeleccionado;
+    public Long getIdReservaHistorial() {
+        return idReservaHistorial;
+    }
+
+    public void setIdReservaHistorial(Long idReservaHistorial) {
+        this.idReservaHistorial = idReservaHistorial;
+    }
+    
 
     @Override
     public AbstractDataAccess<TipoReservaSecuencia> getDataAccess() {
@@ -67,29 +73,34 @@ public class FrmTipoReservaSecuencia extends AbstractFrm<TipoReservaSecuencia> i
         return null;
     }
 
-    @Override
-    public void instanciarRegistro() {
-        TipoReservaSecuencia padre = this.registro;
-        this.registro = new TipoReservaSecuencia();
-        this.registro.setIdTipoReservaSecuenciaPadre(padre);
-    }
+//    @Override
+//    public void instanciarRegistro() {
+//        this.registro = new TipoReservaSecuencia();
+//        if (this.idReservaHistorial !=null) {
+//             this.registro.setid(new ReservaHistorial(idReservaHistorial));
+//        }
+//       
+//    }
 
-    @PostConstruct
-    @Override
-    public void inicializar() {
-        super.inicializar();
-        this.raiz = new DefaultTreeNode("Areas", null);
-        List<TipoReservaSecuencia> lista = trsBean.findByIdPadre(null, 0, 100000000);
-        if (lista != null && !lista.isEmpty()) {
+    
+    
 
-            for (TipoReservaSecuencia next : lista) {
-                if (next.getIdTipoReservaSecuencia() == null) {
-                    this.generarArbol(raiz, next);
-                }
-
-            }
-        }
-    }
+//    @PostConstruct
+//    @Override
+//    public void inicializar() {
+//        super.inicializar();
+//        this.raiz = new DefaultTreeNode("Areas", null);
+//        List<TipoReservaSecuencia> lista = trsBean.findByIdPadre(null, 0, 100000000);
+//        if (lista != null && !lista.isEmpty()) {
+//
+//            for (TipoReservaSecuencia next : lista) {
+//                if (next.getIdTipoReservaSecuencia() == null) {
+//                    this.generarArbol(raiz, next);
+//                }
+//
+//            }
+//        }
+//    }
 
     @Override
     public List<TipoReservaSecuencia> cargarDatos(int primero, int tamanio) {
@@ -119,32 +130,37 @@ public class FrmTipoReservaSecuencia extends AbstractFrm<TipoReservaSecuencia> i
         }
     }
 
-    public TreeNode getRaiz() {
-        return raiz;
-    }
+//    public TreeNode getRaiz() {
+//        return raiz;
+//    }
+//
+//    public void setRaiz(TreeNode raiz) {
+//        this.raiz = raiz;
+//    }
+//
+//    public TreeNode getNodoSeleccionado() {
+//        return nodoSeleccionado;
+//    }
+//
+//    public void setNodoSeleccionado(TreeNode nodoSeleccionado) {
+//        this.nodoSeleccionado = nodoSeleccionado;
+//    }
+//
+//    public void seleccionarNodoListener(NodeSelectEvent nse) {
+//        this.registro = (TipoReservaSecuencia) nse.getTreeNode().getData();
+//        this.seleccionarRegistro();
+//        if (this.registro != null && this.registro.getIdTipoReservaSecuencia()!= null && this.frmReservaHistorial != null) {
+//            this.frmReservaHistorial.setIdTipoReservaSecuencia(this.registro.getIdTipoReservaSecuencia());
+//        }
+//    }
+//    
+//    public FrmReservaHistorial getFrmReservaHistorial() {
+//        return frmReservaHistorial;
+//    }
 
-    public void setRaiz(TreeNode raiz) {
-        this.raiz = raiz;
-    }
-
-    public TreeNode getNodoSeleccionado() {
-        return nodoSeleccionado;
-    }
-
-    public void setNodoSeleccionado(TreeNode nodoSeleccionado) {
-        this.nodoSeleccionado = nodoSeleccionado;
-    }
-
-    public void seleccionarNodoListener(NodeSelectEvent nse) {
-        this.registro = (TipoReservaSecuencia) nse.getTreeNode().getData();
-        this.seleccionarRegistro();
-        if (this.registro != null && this.registro.getIdTipoReservaSecuencia()!= null && this.frmReservaHistorial != null) {
-            this.frmReservaHistorial.setIdTipoReservaSecuencia(this.registro.getIdTipoReservaSecuencia());
-        }
-    }
-    
-    public FrmReservaHistorial getFrmReservaHistorial() {
-        return frmReservaHistorial;
+    @Override
+    public void instanciarRegistro() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     

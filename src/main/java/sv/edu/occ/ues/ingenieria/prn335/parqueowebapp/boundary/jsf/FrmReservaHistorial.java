@@ -14,6 +14,7 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.primefaces.event.NodeSelectEvent;
 import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.TreeNode;
 import sv.edu.occ.ues.ingenieria.prn335.parqueowebapp.app.entity.ReservaHistorial;
@@ -105,6 +106,20 @@ public class FrmReservaHistorial extends AbstractFrm<ReservaHistorial> implement
         this.registro.setActivo(true);
 
     }
+    
+//    public void seleccionarNodoListener(NodeSelectEvent nse) {
+//        this.registro = (TipoReservaSecuencia) nse.getTreeNode().getData();
+//        this.seleccionarRegistro();
+//        if (this.registro != null && this.registro.getIdReservaHistorial()!= null && this.frmTipoReservaSecuencia != null) {
+//            this.registro.setIdTipoReservaSecuencia(idTipoReservaSecuencia);
+//        }
+//    }
+
+    public FrmTipoReservaSecuencia getFrmTipoReservaSecuencia() {
+        return frmTipoReservaSecuencia;
+    }
+    
+    
 
     public Long getIdTipoReservaSecuencia() {
         return idTipoReservaSecuencia;
